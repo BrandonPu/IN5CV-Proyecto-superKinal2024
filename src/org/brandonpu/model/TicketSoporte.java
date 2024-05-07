@@ -7,7 +7,7 @@ package org.brandonpu.model;
 
 /**
  *
- * @author Pavilión
+ * @author informatica
  */
 public class TicketSoporte {
     private int ticketSoporteId;
@@ -88,8 +88,6 @@ public class TicketSoporte {
     public String toString() {
         return "TicketSoporte{" + "ticketSoporteId=" + ticketSoporteId + ", descripcionTicket=" + descripcionTicket + ", estatus=" + estatus + ", cliente=" + cliente + ", clienteId=" + clienteId + ", facturaId=" + facturaId + '}';
     }
-
-    
     
     
 }

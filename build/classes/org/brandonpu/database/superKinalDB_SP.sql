@@ -36,17 +36,18 @@ DELIMITER ;
 
 
 DELIMITER $$
-CREATE PROCEDURE sp_editarCargo(cargoId int,nom varchar(30),des varchar(100))
+CREATE PROCEDURE sp_editarCargo(carId int,nom varchar(30),des varchar(100))
 BEGIN
     UPDATE Cargos
     SET
         nombreCargo = nom,
         descripcionCargo = des
-    WHERE cargoId = cargoId;
+    WHERE cargoId = carId;
 END $$
 DELIMITER ;
 
-
+-- call sp_editarCargo(1,'Brandon', 'Thomas');
+-- call sp_listarCargos();
 -- ******** Empleados ******** --
 DELIMITER $$
 CREATE PROCEDURE sp_agregarEmpleado(nom varchar(30),ape varchar(30),sue decimal(10,2),he time,hs time,carId int,encId int)

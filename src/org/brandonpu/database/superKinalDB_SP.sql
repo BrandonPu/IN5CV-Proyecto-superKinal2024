@@ -20,32 +20,31 @@ DELIMITER ;
 
 
 DELIMITER $$
-CREATE PROCEDURE sp_eliminarCargo(cargoId int)
+CREATE PROCEDURE sp_eliminarCargo(carId int)
 BEGIN
-    DELETE FROM Cargos WHERE cargoId = cargoId;
+    DELETE FROM Cargos WHERE cargoId = carId;
 END $$
 DELIMITER ;
 
 
 DELIMITER $$
-CREATE PROCEDURE sp_buscarCargo(cargoId int)
+CREATE PROCEDURE sp_buscarCargo(carId int)
 BEGIN
-    SELECT * FROM Cargos WHERE cargoId = cargoId;
+    SELECT * FROM Cargos WHERE cargoId = carId;
 END $$
 DELIMITER ;
 
 
 DELIMITER $$
-CREATE PROCEDURE sp_editarCargo(cargoId int,nom varchar(30),des varchar(100))
+CREATE PROCEDURE sp_editarCargo(carId int,nom varchar(30),des varchar(100))
 BEGIN
     UPDATE Cargos
     SET
         nombreCargo = nom,
         descripcionCargo = des
-    WHERE cargoId = cargoId;
+    WHERE cargoId = carId;
 END $$
 DELIMITER ;
-
 
 -- ******** Empleados ******** --
 DELIMITER $$

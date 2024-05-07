@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -26,6 +27,7 @@ import org.brandonpu.dao.Conexion;
 import org.brandonpu.dto.ClienteDTO;
 import org.brandonpu.model.Cliente;
 import org.brandonpu.system.Main;
+import org.brandonpu.utils.SuperKinalAlert;
 
 /**
  * FXML Controller class
@@ -66,10 +68,12 @@ public class MenuClientesController implements Initializable {
             stage.menuAgregarClientesView(2);
         } else if(event.getSource() == btnRegresarMenu){
             stage.menuPrincipalView();
-        }  else if(event.getSource() == btnEliminar){
-            int cliId = ((Cliente)tblClientes.getSelectionModel().getSelectedItem()).getClienteId();
-            eliminarCliente(cliId);
-            cargarLista();
+        }else if(event.getSource() == btnEliminar){
+            if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(405).get() == ButtonType.OK){
+                int cliId = ((Cliente)tblClientes.getSelectionModel().getSelectedItem()).getClienteId();
+                eliminarCliente(cliId);
+                cargarLista();
+            }
         } else if(event.getSource() == btnBuscar){
             tblClientes.getItems().clear();
             if(tfClienteId.getText().equals("")){
@@ -102,7 +106,7 @@ public class MenuClientesController implements Initializable {
         
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_listarClientes()";
+            String sql = "call sp_listarclientes()";
             statement = conexion.prepareStatement(sql);
             resultSet = statement.executeQuery();
             
@@ -141,7 +145,7 @@ public class MenuClientesController implements Initializable {
     public void eliminarCliente(int cliId){
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_eliminarClientes(?)";
+            String sql = "call sp_eliminarCliente(?)";
             statement = conexion.prepareStatement(sql);
             statement.setInt(1, cliId);
             statement.execute();
