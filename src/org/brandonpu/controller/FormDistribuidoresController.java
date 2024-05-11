@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -26,6 +27,7 @@ import org.brandonpu.dao.Conexion;
 import org.brandonpu.dto.DistribuidorDTO;
 import org.brandonpu.model.Distribuidor;
 import org.brandonpu.system.Main;
+import org.brandonpu.utils.SuperKinalAlert;
 
 /**
  * FXML Controller class
@@ -67,9 +69,11 @@ public class FormDistribuidoresController implements Initializable {
         } else if(event.getSource() == btnRegresar){
             stage.menuPrincipalView();
         } else if(event.getSource() == btnEliminar){
-            int disId = ((Distribuidor)tblDistribuidores.getSelectionModel().getSelectedItem()).getDistribuidorId();
-            eliminarDistribuidor(disId);
-            cargarLista();
+            if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(405).get() == ButtonType.OK){
+                int disId = ((Distribuidor)tblDistribuidores.getSelectionModel().getSelectedItem()).getDistribuidorId();
+                eliminarDistribuidor(disId);
+                cargarLista();
+            }
         } else if(event.getSource() == btnBuscar){
             tblDistribuidores.getItems().clear();
             if(tfDistribuidorId.getText().equals("")){
@@ -158,7 +162,7 @@ public class FormDistribuidoresController implements Initializable {
            }catch(SQLException e){
              System.out.println(e.getMessage());
            }
-       }
+        }
     }
     
     public Distribuidor buscarDistribuidor(){

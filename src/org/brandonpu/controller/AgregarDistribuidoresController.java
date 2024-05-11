@@ -15,11 +15,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import org.brandonpu.dao.Conexion;
 import org.brandonpu.dto.DistribuidorDTO;
 import org.brandonpu.model.Distribuidor;
 import org.brandonpu.system.Main;
+import org.brandonpu.utils.SuperKinalAlert;
 
 /**
  * FXML Controller class
@@ -57,9 +59,21 @@ public class AgregarDistribuidoresController implements Initializable {
             
         } else if(event.getSource() == btnGuardar){
             if(op == 1){
-                agregarDistribuidor();
-                stage.menuDistribuidorView();
+                if(!tfNombreDistribuidor.getText().equals("") && !tfDireccionDistribuidor.getText().equals("") && !tfNitDistribuidor.getText().equals("") && !tfTelefonoDistribuidor.getText().equals("")){
+                    agregarDistribuidor();
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
+                    stage.menuDistribuidorView();
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    tfNombreDistribuidor.requestFocus();
+                    return;
+                }
             }else if(op == 2){
+                if(!tfNombreDistribuidor.getText().equals("") && !tfDireccionDistribuidor.getText().equals("") && !tfNitDistribuidor.getText().equals("") && !tfTelefonoDistribuidor.getText().equals("")){
+                    if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
+                        
+                    }
+                }
                 editarDistribuidor();
                 DistribuidorDTO.getDistribuidorDTO().setDistribuidor(null);
                 stage.menuDistribuidorView();

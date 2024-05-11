@@ -48,19 +48,28 @@ DELIMITER ;
 
 -- ******** Empleados ******** --
 DELIMITER $$
-CREATE PROCEDURE sp_agregarEmpleado(nom varchar(30),ape varchar(30),sue decimal(10,2),he time,hs time,carId int,encId int)
+CREATE PROCEDURE sp_agregarEmpleado(nom varchar(30),ape varchar(30),sue decimal(10,2),he time,hs time,carId int)
 BEGIN
-    INSERT INTO Empleados(nombreEmpleado, apellidoEmpleado, sueldo, horaEntrada, horaSalida, cargoId, encargadoId)
-    VALUES (nom, ape, sue, he, hs, carId, encId);
+    INSERT INTO Empleados(nombreEmpleado, apellidoEmpleado, sueldo, horaEntrada, horaSalida, cargoId)
+    VALUES (nom, ape, sue, he, hs, carId);
 END $$
 DELIMITER ;
+
+-- CALL sp_agregarEmpleado('Marlon','Adonai', 20.00,'04:00:00', '06:00:00',1);
 
 DELIMITER $$
 CREATE PROCEDURE sp_listarEmpleados()
 BEGIN
-    SELECT * FROM Empleados;
+    SELECT 
+        EP.empleadoId, EP.nombreEmpleado, EP.apellidoEmpleado, EP.sueldo, EP.horaEntrada, EP.horaSalida, 
+        CONCAT('Id: ', C.cargoId, ' | ', C.nombreCargo, ': ', C.descripcionCargo) AS 'cargo',
+        CONCAT('Id: ', E.empleadoId, ' | ', E.nombreEmpleado ,' ', e.apellidoEmpleado) AS 'encargado' 
+    FROM Empleados EP
+    JOIN Cargos C ON EP.cargoId = C.cargoId
+    LEFT JOIN Empleados E ON EP.encargadoId = E.empleadoId;
 END $$
 DELIMITER ;
+call sp_listarEmpleados();
 
 DELIMITER $$
 CREATE PROCEDURE sp_eliminarEmpleado(empId int)
@@ -69,6 +78,9 @@ BEGIN
 END $$
 DELIMITER ;
 
+-- call sp_eliminarEmpleado(2);
+
+select * from 
 DELIMITER $$
 CREATE PROCEDURE sp_buscarEmpleado(empId int)
 BEGIN
@@ -77,7 +89,7 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE sp_editarEmpleado(empId int,nom varchar(30),ape varchar(30),sue decimal(10,2),he time,hs time,carId int,encId int)
+CREATE PROCEDURE sp_editarEmpleado(empId int,nom varchar(30),ape varchar(30),sue decimal(10,2),he time,hs time,carId int)
 BEGIN
     UPDATE Empleados
     SET
@@ -86,8 +98,7 @@ BEGIN
         sueldo = sue,
         horaEntrada = he,
         horaSalida = hs,
-        cargoId = carId,
-        encargadoId = encId
+        cargoId  = carId
     WHERE empleadoId = empId;
 END $$
 DELIMITER ;
@@ -150,7 +161,12 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE sp_listarFacturas()
 BEGIN
-    SELECT * FROM Facturas;
+    SELECT F.facturaId, F.fecha, F.hora,
+	CONCAT('Id: ', C.clienteId, ' | ', C.nombre, ' ', C.apellido) AS 'cliente',
+	CONCAT('Id: ', E.empleadoId, ' | ', E.nombreEmpleado ,' ', e.apellidoEmpleado) AS 'empleado',
+    F.total from Facturas F
+    JOIN Clientes C on F.clienteId = C.clienteId
+    JOIN Empleados E on F.empleadoId = E.empleadoId;
 END $$
 DELIMITER ;
 
@@ -169,15 +185,24 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE sp_editarFactura(facId int,fec date,hor time,cliId int,empId int,tot decimal(10,2))
+CREATE PROCEDURE sp_editarFactura(facId int,cliId int,empId int)
 BEGIN
     UPDATE Facturas
     SET
-        fecha = fec,
-        hora = hor,
         clienteId = cliId,
-        empleadoId = empId,
-        total = tot
+        empleadoId = empId
+    WHERE facturaId = facId;
+END $$
+DELIMITER ;
+
+
+-- ************* Asignar total *********** --
+DELIMITER $$
+CREATE PROCEDURE sp_editarTotalFactura(facId int, tot decimal(10,2))
+BEGIN
+    UPDATE Facturas
+    SET
+		total = tot
     WHERE facturaId = facId;
 END $$
 DELIMITER ;
@@ -545,8 +570,12 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE sp_asignarEncargado(empId int, encId int)
 BEGIN
-	UPDATE empleados 
+	UPDATE Empleados 
 		set encargadoId = encId
 			where empleadoId = empId;
 END $$
 DELIMITER ;
+
+call sp_listarEmpleados();
+select * from Empleados;
+call sp_asignarEncargado(3,4);

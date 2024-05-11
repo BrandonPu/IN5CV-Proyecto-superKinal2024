@@ -18,9 +18,13 @@ import org.brandonpu.controller.AgregarDistribuidoresController;
 import org.brandonpu.controller.MenuAgregarClientesController;
 import org.brandonpu.controller.MenuClientesController;
 import org.brandonpu.controller.FormDistribuidoresController;
+import org.brandonpu.controller.FormEmpleadosController;
 import org.brandonpu.controller.MenuCargoController;
 import org.brandonpu.controller.MenuCategoriaProductosController;
+import org.brandonpu.controller.MenuEmpleadosController;
+import org.brandonpu.controller.MenuFacturaController;
 import org.brandonpu.controller.MenuPrincipalController;
+import org.brandonpu.controller.MenuProductosController;
 import org.brandonpu.controller.MenuTicketSoporteController;
 
 /**
@@ -141,6 +145,47 @@ public class Main extends Application {
         }
     }
     
+    public void menuEmpleadosView(){
+        try{
+            MenuEmpleadosController menuEmpleadosView = (MenuEmpleadosController)switchScene("MenuEmpleadosView.fxml", 1300,850);
+            menuEmpleadosView.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        
+    }
+    public void formEmpleadosView(int op){
+        try{
+            FormEmpleadosController formEmpleadosView = (FormEmpleadosController)switchScene("FormEmpleadosView.fxml", 625,775);
+            formEmpleadosView.setOp(op);
+            formEmpleadosView.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public void menuFacturaView(){
+        try{
+            MenuFacturaController menuFacturaView = (MenuFacturaController)switchScene("MenuFacturaView.fxml", 1200,750);
+            menuFacturaView.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public void menuProductosView(){
+        try{
+            MenuProductosController menuProductosView = (MenuProductosController)switchScene("MenuProductosView.fxml", 1600,950);
+            menuProductosView.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+              
+    }
     /**
      * @param args the command line arguments
      */

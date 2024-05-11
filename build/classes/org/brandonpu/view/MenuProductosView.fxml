@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="950.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.brandonpu.controller.MenuProductosController">
+   <children>
+      <ImageView fitHeight="950.0" fitWidth="1600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/FondoMenuProductos.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tblProductos" layoutX="10.0" layoutY="200.0" prefHeight="550.0" prefWidth="1225.0">
+        <columns>
+          <TableColumn fx:id="colProductoId" minWidth="90.0" prefWidth="75.0" text="productoId" />
+          <TableColumn fx:id="colNombre" minWidth="130.0" prefWidth="75.0" text="Nombre" />
+            <TableColumn fx:id="colDescripcion" minWidth="200.0" prefWidth="75.0" text="Descripcion" />
+            <TableColumn fx:id="colCantidad" minWidth="120.0" prefWidth="75.0" text="Cantidad" />
+            <TableColumn fx:id="colPrecioUnitario" minWidth="150.0" prefWidth="75.0" text="PrecioVentaUnitario" />
+            <TableColumn fx:id="colPrecioMayor" minWidth="150.0" prefWidth="75.0" text="PrecioVentaMayor" />
+            <TableColumn fx:id="colPrecioCompra" minWidth="120.0" prefWidth="75.0" text="PrecioCompra" />
+            <TableColumn fx:id="colDistribuidor" minWidth="120.0" prefWidth="75.0" text="distribuidor" />
+            <TableColumn fx:id="colCategoriaProductos" minWidth="150.0" prefWidth="75.0" text="categoriaProductos" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnGuardar" layoutX="1164.0" layoutY="776.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="43.0" prefWidth="96.0" style="-fx-background-radius: 10;" text="Guardar">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnRegresar" layoutX="31.0" layoutY="879.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Regresar">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnEliminar" layoutX="35.0" layoutY="763.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="103.0" style="-fx-background-radius: 10;" text="Eliminar">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnVaciar" layoutX="1023.0" layoutY="776.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="43.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Vaciar Form">
+         <font>
+            <Font name="System Italic" size="15.0" />
+         </font>
+      </Button>
+      <TextField fx:id="tfNombreProducto" layoutX="1337.0" layoutY="123.0" prefHeight="30.0" prefWidth="229.0" />
+      <TextField fx:id="tfCantidadStock" layoutX="1337.0" layoutY="210.0" prefHeight="30.0" prefWidth="229.0" />
+      <TextField fx:id="tfPrecioUnitario" layoutX="1337.0" layoutY="289.0" prefHeight="30.0" prefWidth="229.0" />
+      <TextField fx:id="tfPrecioMayor" layoutX="1337.0" layoutY="379.0" prefHeight="30.0" prefWidth="229.0" />
+      <TextField fx:id="tfPrecioCompra" layoutX="1337.0" layoutY="466.0" prefHeight="30.0" prefWidth="229.0" />
+      <TextArea fx:id="taDescripcion" layoutX="1270.0" layoutY="550.0" prefHeight="120.0" prefWidth="305.0" />
+      <TextField fx:id="tfProductoId" layoutX="1395.0" layoutY="42.0" prefHeight="30.0" prefWidth="171.0" />
+      <ComboBox fx:id="cmbCategoriaProducto" layoutX="984.0" layoutY="135.0" prefHeight="36.0" prefWidth="276.0" />
+      <ComboBox fx:id="cmbDistribuidor" layoutX="656.0" layoutY="135.0" prefHeight="36.0" prefWidth="276.0" />
+   </children>
+</AnchorPane>
