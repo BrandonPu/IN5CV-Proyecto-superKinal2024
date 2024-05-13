@@ -58,7 +58,7 @@ public class MenuCargoController implements Initializable {
             stage.menuPrincipalView();
         }else if(event.getSource() == btnGuardar){
             tblCargos.getItems().clear();
-            if(tfCargosId.getText().equals("")){
+            if(!tfNombreCargo.getText().equals("")){
                 agregarCargo();
                 cargarDatos();
             } else{

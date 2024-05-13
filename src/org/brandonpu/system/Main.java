@@ -25,6 +25,7 @@ import org.brandonpu.controller.MenuEmpleadosController;
 import org.brandonpu.controller.MenuFacturaController;
 import org.brandonpu.controller.MenuPrincipalController;
 import org.brandonpu.controller.MenuProductosController;
+import org.brandonpu.controller.MenuPromocionesController;
 import org.brandonpu.controller.MenuTicketSoporteController;
 
 /**
@@ -185,6 +186,16 @@ public class Main extends Application {
             e.printStackTrace();
         }
               
+    }
+    
+    public void menuPromocionesView(){
+        try{
+            MenuPromocionesController menuPromocionesView = (MenuPromocionesController)switchScene("MenuPromocionesView.fxml", 1200,700);
+            menuPromocionesView.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
     /**
      * @param args the command line arguments

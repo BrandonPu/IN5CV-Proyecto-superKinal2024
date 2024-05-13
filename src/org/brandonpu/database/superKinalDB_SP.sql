@@ -348,7 +348,7 @@ DELIMITER ;
 
 -- --- ************** Productos *************** --
 DELIMITER $$
-CREATE PROCEDURE sp_agregarProducto(nom varchar(50),des varchar(100),cant int,pvu decimal(10,2),pvm decimal(10,2),pc decimal(10,2),img BLOB,disId int,catId int)
+CREATE PROCEDURE sp_agregarProducto(nom varchar(50),des varchar(100),cant int,pvu decimal(10,2),pvm decimal(10,2),pc decimal(10,2),img LONGBLOB,disId int,catId int)
 BEGIN
     INSERT INTO Productos(nombreProducto, descripcionProducto, cantidadStock, precioVentaUnitario, precioVentaMayor, precioCompra, imagenProducto, distribuidorId, categoriaProductosId)
     VALUES (nom, des, cant, pvu, pvm, pc, img, disId, catId);
@@ -358,10 +358,16 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE sp_listarProductos()
 BEGIN
-    SELECT * FROM Productos;
+     SELECT P.productoId, P.nombreProducto, P.descripcionProducto, P.cantidadStock, P.precioVentaUnitario, P.precioVentaMayor,
+        CONCAT('Id: ', D.distribuidorId, '| ',D.nombreDistribuidor)AS 'Distribuidor',
+		CONCAT('Id: ', C.categoriaProductosId, '| ',C.nombreCategoria)AS 'Categoria'
+		FROM Productos P
+        join Distribuidores D on P.distribuidorId = D.distribuidorId
+		join CategoriaProductos C on P.categoriaProductosId = C.categoriaProductosId;
 END $$
 DELIMITER ;
 
+call 
 DELIMITER $$
 CREATE PROCEDURE sp_eliminarProducto(prodId int)
 BEGIN
@@ -376,9 +382,10 @@ BEGIN
     SELECT * FROM Productos WHERE productoId = prodId;
 END $$
 DELIMITER ;
+call sp_buscarProducto(1);
 
 DELIMITER $$
-CREATE PROCEDURE sp_editarProducto(prodId int,nom varchar(50),des varchar(100),cant int,pvu decimal(10,2),pvm decimal(10,2),pc decimal(10,2),img BLOB,disId int,catId int)
+CREATE PROCEDURE sp_editarProducto(prodId int,nom varchar(50),des varchar(100),cant int,pvu decimal(10,2),pvm decimal(10,2),pc decimal(10,2),img LONGBLOB,disId int,catId int)
 BEGIN
     UPDATE Productos
     SET
@@ -482,17 +489,19 @@ DELIMITER ;
 
 -- ***************** Promociones ****************** --
 DELIMITER $$
-CREATE PROCEDURE sp_agregarPromocion(pre decimal(10,2),des varchar(100),fecIni date,fecFin date,prodId int)
+CREATE PROCEDURE sp_agregarPromocion(pre decimal(10,2),des varchar(100), fecFin date,prodId int)
 BEGIN
     INSERT INTO Promociones(precioPromocion, descripcionPromocion, fechaInicio, fechaFinalizacion, productoId)
-    VALUES (pre, des, fecIni, fecFin, prodId);
+    VALUES (pre, des, DATE(NOW()), fecFin, prodId);
 END $$
 DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE sp_listarPromociones()
 BEGIN
-    SELECT * FROM Promociones;
+    select PS.promocionId, PS.precioPromocion, PS.descripcionPromocion, PS.fechaInicio, PS.fechaFinalizacion,  
+			P.nombreProducto from Promociones PS
+            join Productos P on PS.productoId = P.productoId;
 END $$
 DELIMITER ;
 
