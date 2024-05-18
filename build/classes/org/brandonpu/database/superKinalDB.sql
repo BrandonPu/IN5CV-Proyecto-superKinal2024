@@ -59,7 +59,7 @@ create table Productos(
     precioVentaUnitario decimal(10,2) not null,
     precioVentaMayor decimal(10, 2) not null,
     precioCompra decimal(10, 2) not null,
-    imagenProducto BLOB,
+    imagenProducto LONGBLOB,
     distribuidorId int not null,
     categoriaProductosId int not null,
     primary key PK_productoId(productoId),
@@ -141,3 +141,22 @@ create table TicketSoporte(
 		references Facturas (facturaId)
 );
 
+create table NivelesAcceso(
+	nivelAccesoId int not null auto_increment,
+    nivelAcceso varchar(40) not null,
+    primary key PK_nivelAccesoId(nivelAccesoId)
+);
+
+create table Usuarios(
+	usuarioId int not null auto_increment,
+    usuario varchar(30) not null,
+    contrasenia varchar(100) not null,
+    nivelAccesoId int not null,
+    empleadoId int not null,
+    primary key PK_usuarioId(usuarioId),
+    constraint FK_Usuarios_NivelesAcceso foreign key Usuarios(nivelAccesoId)
+		references NivelesAcceso(nivelAccesoId),
+	constraint FK_Usuarios_Empleados foreign key Usuarios(empleadoId)
+		references Empleados(empleadoId)
+    
+);

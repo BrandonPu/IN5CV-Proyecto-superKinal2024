@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="750.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.brandonpu.controller.MenuCargoController">
+   <children>
+      <ImageView fitHeight="750.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/FondoMenuCargos.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="tfCargosId" editable="false" layoutX="526.0" layoutY="182.0" prefHeight="40.0" prefWidth="270.0" promptText="Cargo Id" style="-fx-background-radius: 10;" />
+      <TextField fx:id="tfNombreCargo" layoutX="876.0" layoutY="182.0" prefHeight="40.0" prefWidth="300.0" style="-fx-background-radius: 10;" />
+      <TextArea fx:id="taDescripcion" layoutX="776.0" layoutY="292.0" prefHeight="250.0" prefWidth="400.0" wrapText="true" />
+      <TableView fx:id="tblCargos" layoutX="43.0" layoutY="268.0" onMouseClicked="#cargarDatosEditar" prefHeight="350.0" prefWidth="700.0">
+        <columns>
+          <TableColumn fx:id="colCargoId" prefWidth="150.0" text="cargoId" />
+          <TableColumn fx:id="colNombreCargo" prefWidth="230.0" text="nombreCargo" />
+            <TableColumn fx:id="colDescripcionCargo" prefWidth="320.0" text="descripcionCargo" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnRegresar" layoutX="637.0" layoutY="629.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 10;" text="Regresar">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnGuardar" layoutX="776.0" layoutY="560.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 10;" text="Guardar">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnVaciar" layoutX="919.0" layoutY="560.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 10;" text="Vaciar Form">
+         <font>
+            <Font name="System Italic" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnEliminar" layoutX="1057.0" layoutY="560.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 10;" text="Eliminar">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+      </Button>
+      <TextField fx:id="tfCargoId" layoutX="310.0" layoutY="182.0" prefHeight="40.0" prefWidth="166.0" promptText="Ingrese el Id de cargo a Buscar" style="-fx-background-radius: 10;" />
+      <Button fx:id="btnBuscar" layoutX="254.0" layoutY="182.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="48.0">
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/Lupa.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="btnEditar" layoutX="919.0" layoutY="654.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 10;" text="Editar">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+      </Button>
+      <Text fill="RED" fontSmoothingType="LCD" layoutX="839.0" layoutY="650.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccione a un cargo y editelo y apache el boton" wrappingWidth="373.33660888671875" />
+   </children>
+</AnchorPane>

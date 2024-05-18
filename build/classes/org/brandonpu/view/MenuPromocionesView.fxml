@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.brandonpu.controller.MenuPromocionesController">
+   <children>
+      <ImageView fitHeight="700.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/Promociones.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="tfPromocionId" layoutX="14.0" layoutY="142.0" prefHeight="34.0" prefWidth="242.0" promptText="Promoción ID" />
+      <TextField fx:id="tfPrecio" layoutX="14.0" layoutY="214.0" prefHeight="34.0" prefWidth="242.0" promptText="Precio de la Promoción" />
+      <TextField fx:id="tfFechaInicio" layoutX="25.0" layoutY="449.0" prefHeight="25.0" prefWidth="200.0" promptText="Fecha de Inicio de la Promoción" />
+      <TextField fx:id="tfFechaFinalizacion" layoutX="14.0" layoutY="536.0" prefHeight="34.0" prefWidth="290.0" promptText="Fecha de Finalización" />
+      <TextArea fx:id="taDescripcion" layoutX="14.0" layoutY="299.0" prefHeight="101.0" prefWidth="290.0" promptText="Máximo 100 palabras." />
+      <TableView fx:id="tblPromociones" layoutX="369.0" layoutY="153.0" onMouseClicked="#cargarDatosEditar" prefHeight="350.0" prefWidth="800.0">
+         <columns>
+            <TableColumn fx:id="colPromocionId" minWidth="120.0" prefWidth="89.0" text="promocionId" />
+            <TableColumn fx:id="colPrecio" minWidth="130.0" prefWidth="107.0" text="precioPromocion" />
+            <TableColumn fx:id="colDescripcion" minWidth="155.0" prefWidth="137.0" text="descripcionPromocion" />
+            <TableColumn fx:id="colFechaInicio" minWidth="130.0" prefWidth="85.0" text="fechaInicio" />
+            <TableColumn fx:id="colFechaFinalizacion" minWidth="130.0" prefWidth="114.0" text="fechaFinalizacion" />
+            <TableColumn fx:id="colProducto" minWidth="130.0" prefWidth="89.0" text="productoId" />
+         </columns>
+      </TableView>
+      <ComboBox fx:id="cmbProducto" layoutX="567.0" layoutY="107.0" prefHeight="34.0" prefWidth="251.0" />
+      <Button fx:id="btnGuardar" alignment="CENTER" layoutX="182.0" layoutY="605.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="46.0" prefWidth="130.0" text="Guardar" />
+      <Button fx:id="btnVaciar" alignment="CENTER" layoutX="1069.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="46.0" prefWidth="99.0" text="Vaciar Form" />
+      <Button fx:id="btnEliminar" alignment="CENTER" layoutX="936.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="46.0" prefWidth="99.0" text="Eliminar" />
+      <Button fx:id="btnRegresar" layoutX="1001.0" layoutY="591.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Regresar">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

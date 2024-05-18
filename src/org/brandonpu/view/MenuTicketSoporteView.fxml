@@ -10,6 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" prefHeight="750.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.brandonpu.controller.MenuTicketSoporteController">
    <children>
@@ -22,7 +23,7 @@
       <TextArea fx:id="taDescripcion" layoutX="52.0" layoutY="324.0" prefHeight="170.0" prefWidth="370.0" wrapText="true" />
       <ComboBox fx:id="cmbClientes" layoutX="371.0" layoutY="207.0" prefHeight="40.0" prefWidth="295.0" />
       <ComboBox fx:id="cmbFacturas" layoutX="693.0" layoutY="207.0" prefHeight="40.0" prefWidth="237.0" />
-      <TableView fx:id="tblTickets" layoutX="454.0" layoutY="303.0" prefHeight="382.0" prefWidth="686.0">
+      <TableView fx:id="tblTickets" layoutX="453.0" layoutY="288.0" onMouseClicked="#cargarDatosEditar" prefHeight="382.0" prefWidth="686.0">
         <columns>
           <TableColumn fx:id="colTicketId" prefWidth="70.39993286132812" text="TicketId" />
           <TableColumn fx:id="colDescripcion" prefWidth="195.20001220703125" text="Descripcion " />
@@ -36,11 +37,33 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnGuardar" layoutX="322.0" layoutY="550.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="120.0" style="-fx-background-radius: 10;" text="Guardar">
+      <Button fx:id="btnGuardar" layoutX="320.0" layoutY="541.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="120.0" style="-fx-background-radius: 10;" text="Guardar">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
       <ComboBox fx:id="cmbEstatus" layoutX="55.0" layoutY="541.0" prefHeight="40.0" prefWidth="250.0" />
+      <Button fx:id="btnVaciar" layoutX="311.0" layoutY="625.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="120.0" style="-fx-background-radius: 10;" text="Vaciar Form">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnEliminar" disable="true" layoutX="60.0" layoutY="605.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="120.0" style="-fx-background-radius: 10;" text="Eliminar">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <TextField fx:id="tfTicketId" alignment="CENTER" layoutX="795.0" layoutY="683.0" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="280.0" promptText="Ingrese el id del Ticket a buscar" style="-fx-background-radius: 5;" />
+      <Button fx:id="btnBuscar" layoutX="1083.0" layoutY="683.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="55.0" style="-fx-background-radius: 10;">
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/Lupa.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Text layoutX="693.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Poner la factura Id manual hasta " wrappingWidth="313.6000244140625" />
+      <Text layoutX="693.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="que se arregle Gracias (Para el editar)" wrappingWidth="250.39999999999998" />
    </children>
 </AnchorPane>

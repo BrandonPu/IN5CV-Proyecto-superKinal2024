@@ -20,10 +20,10 @@ public class ClienteDTO {
     }
     
     public static ClienteDTO getClienteDTO(){
-           if(instance == null){
-               instance = new ClienteDTO();
-           }
-           return instance;
+        if(instance == null){
+            instance = new ClienteDTO();
+        }
+        return instance;
     }
 
     public Cliente getCliente() {
