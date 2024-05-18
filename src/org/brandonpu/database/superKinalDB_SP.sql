@@ -1,5 +1,32 @@
 use superKinalDB;
 
+-- Buscar Usuario
+DELIMITER $$
+CREATE PROCEDURE sp_buscarUsuario(us varchar(30))
+BEGIN
+	select * from Usuarios
+		where usuario = us;
+END $$
+DELIMITER ;
+
+
+-- SP agregar Usuario
+DELIMITER $$
+CREATE PROCEDURE sp_agregarUsuario(us varchar(30), con varchar(100), nivAccId int, empId int)
+BEGIN 
+	INSERT INTO Usuarios(usuario,contrasenia,nivelAccesoId, empleadoId) values
+		(us, con, nivAccId, empId);
+END $$
+DELIMITER ;
+
+
+-- SP listar Nivel acceso
+DELIMITER $$
+CREATE PROCEDURE sp_listarNivelAcceso()
+BEGIN
+	select * from nivelesAcceso;
+END $$
+DELIMITER 
 
 -- ----------------- CRUD ----------------- --
 -- ******** Cargos ******** --
@@ -55,7 +82,6 @@ BEGIN
 END $$
 DELIMITER ;
 
--- CALL sp_agregarEmpleado('Marlon','Adonai', 20.00,'04:00:00', '06:00:00',1);
 
 DELIMITER $$
 CREATE PROCEDURE sp_listarEmpleados()
@@ -77,8 +103,6 @@ BEGIN
     DELETE FROM Empleados WHERE empleadoId = empId;
 END $$
 DELIMITER ;
-
--- call sp_eliminarEmpleado(2);
 
 select * from 
 DELIMITER $$
@@ -234,14 +258,12 @@ BEGIN
 END $$
 DELIMITER ;
 
-
 DELIMITER $$
 CREATE PROCEDURE sp_buscarTicketSoporte(ticSopId int)
 BEGIN
     SELECT * FROM TicketSoporte WHERE ticketSoporteId = ticSopId;
 END $$
 DELIMITER ;
-
 
 DELIMITER $$
 CREATE PROCEDURE sp_editarTicketSoporte(ticSopId int,des varchar(250),est varchar(30),cliId int,facId int)
@@ -584,7 +606,3 @@ BEGIN
 			where empleadoId = empId;
 END $$
 DELIMITER ;
-
-call sp_listarEmpleados();
-select * from Empleados;
-call sp_asignarEncargado(3,4);

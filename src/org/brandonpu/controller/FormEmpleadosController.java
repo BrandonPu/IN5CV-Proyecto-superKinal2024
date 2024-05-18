@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.brandonpu.dao.Conexion;
@@ -25,6 +26,7 @@ import org.brandonpu.dto.EmpleadoDTO;
 import org.brandonpu.model.Cargo;
 import org.brandonpu.model.Empleado;
 import org.brandonpu.system.Main;
+import org.brandonpu.utils.SuperKinalAlert;
 
 /**
  * FXML Controller class
@@ -65,12 +67,32 @@ public class FormEmpleadosController implements Initializable {
             EmpleadoDTO.getEmpleadoDTO().setEmpleado(null);
         }else if(event.getSource() == btnAgregar){
             if(op == 1){
-                agregarEmpleado();
-                stage.menuEmpleadosView();   
+                
+                if(!tfNombreEmpleado.getText().equals("") && !tfApellidoEmpleado.getText().equals("") && !tfHoraEntrada.getText().equals("") && !tfHoraSalida.getText().equals("")){
+                    agregarEmpleado();
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
+                    stage.menuEmpleadosView();
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    tfNombreEmpleado.requestFocus();
+                    return;
+                }   
             } else if(op == 2){
-                editarEmpleado();
-                EmpleadoDTO.getEmpleadoDTO().setEmpleado(null);
-                stage.menuEmpleadosView();
+                
+                if(!tfNombreEmpleado.getText().equals("") && !tfApellidoEmpleado.getText().equals("") && !tfHoraEntrada.getText().equals("") && !tfHoraSalida.getText().equals("")){
+                    if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
+                        editarEmpleado();
+                        EmpleadoDTO.getEmpleadoDTO().setEmpleado(null);
+                        stage.menuEmpleadosView();
+                    }
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    tfNombreEmpleado.requestFocus();
+                    return;
+                } 
+            } else if(op == 3){
+                agregarEmpleado();
+                stage.formUsuarioView();
             }
         }
     }

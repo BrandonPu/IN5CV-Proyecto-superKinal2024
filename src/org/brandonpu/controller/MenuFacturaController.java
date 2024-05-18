@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -28,6 +29,7 @@ import org.brandonpu.model.Cliente;
 import org.brandonpu.model.Empleado;
 import org.brandonpu.model.Factura;
 import org.brandonpu.system.Main;
+import org.brandonpu.utils.SuperKinalAlert;
 
 /**
  * FXML Controller class
@@ -69,10 +71,15 @@ public class MenuFacturaController implements Initializable {
         } else if(event.getSource() == btnGuardar){
             if(tfFacturaId.getText().equals("")){
                 agregarFactura();
+                SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
                 cargarDatos();
             } else{
-                editarFactura();
-                cargarDatos();
+                if(!cmbEmpleadoId.getItems().equals("")){
+                    if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
+                        editarFactura();
+                        cargarDatos();
+                    }
+                }
             }
         } else if(event.getSource() == btnVaciar){
             vaciarDatos();

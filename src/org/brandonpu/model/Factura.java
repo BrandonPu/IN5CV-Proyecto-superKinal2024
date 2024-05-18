@@ -108,8 +108,6 @@ public class Factura {
 
     @Override
     public String toString() {
-        return "Factura{" + "facturaId=" + facturaId + ", fecha=" + fecha + ", hora=" + hora + ", cliente=" + cliente + ", clienteId=" + clienteId + ", empleado=" + empleado + ", empleadoId=" + empleadoId + ", total=" + total + '}';
+        return "Id: " + facturaId + ", cliente: " + cliente + " // " +  ", empleado: " + empleado ;
     }
-    
-    
 }

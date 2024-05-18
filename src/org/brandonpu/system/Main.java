@@ -19,6 +19,8 @@ import org.brandonpu.controller.MenuAgregarClientesController;
 import org.brandonpu.controller.MenuClientesController;
 import org.brandonpu.controller.FormDistribuidoresController;
 import org.brandonpu.controller.FormEmpleadosController;
+import org.brandonpu.controller.FormUsuarioController;
+import org.brandonpu.controller.LoginController;
 import org.brandonpu.controller.MenuCargoController;
 import org.brandonpu.controller.MenuCategoriaProductosController;
 import org.brandonpu.controller.MenuEmpleadosController;
@@ -44,6 +46,7 @@ public class Main extends Application {
         stage.setTitle("Super Kinal APP");
         stage.getIcons().add(icon);
         menuPrincipalView();
+        //loginView(); //Poner cuando sea para Login la cual ya esta terminado
         stage.show();
     }
     
@@ -192,6 +195,26 @@ public class Main extends Application {
         try{
             MenuPromocionesController menuPromocionesView = (MenuPromocionesController)switchScene("MenuPromocionesView.fxml", 1200,700);
             menuPromocionesView.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public void formUsuarioView(){
+        try{
+            FormUsuarioController formUsuarioView = (FormUsuarioController)switchScene("FormUsuarioView.fxml", 600,700);
+            formUsuarioView.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public void loginView(){
+        try{
+            LoginController loginView = (LoginController)switchScene("LoginView.fxml", 600,700);
+            loginView.setStage(this);
         }catch(Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();

@@ -39,6 +39,7 @@ import org.brandonpu.model.CategoriaProducto;
 import org.brandonpu.model.Distribuidor;
 import org.brandonpu.model.Producto;
 import org.brandonpu.system.Main;
+import org.brandonpu.utils.SuperKinalAlert;
 
 /**
  * FXML Controller class
@@ -58,7 +59,7 @@ public class MenuProductosController implements Initializable {
     @FXML
     ComboBox cmbDistribuidores, cmbCategorias;
     @FXML
-    Button btnRegresar,btnGuardar, btnBuscar, btnEliminar;
+    Button btnRegresar,btnGuardar, btnBuscar, btnEliminar,btnVaciar;
     @FXML
     TextField tfProductoId, tfNombreProducto,tfUnidad, tfMayor, tfCompra, tfDistribuidor, tfCategoria, tfStock ;
     @FXML
@@ -86,6 +87,7 @@ public class MenuProductosController implements Initializable {
                 stage.menuPrincipalView();
             }else if(event.getSource() == btnGuardar){
                 agregarProducto();
+                SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
                 cargarDatos();
             }else if(event.getSource() == btnBuscar){
                 Producto producto = buscarProducto();
@@ -99,7 +101,9 @@ public class MenuProductosController implements Initializable {
                     Image image = new Image(file);
                     imgMostrar.setImage(image);
                 }
-            }    
+            }  else if(event.getSource() == btnVaciar){
+                vaciarDatos();
+            }  
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -126,7 +130,19 @@ public class MenuProductosController implements Initializable {
         
     }
     
-     public void cargarDatos(){
+    public void vaciarDatos(){
+        tfProductoId.clear();
+        tfNombreProducto.clear();
+        tfUnidad.clear();
+        tfMayor.clear();
+        tfCompra.clear();
+        tfStock.clear();
+        taDescripcionProducto.clear();
+        cmbDistribuidores.getSelectionModel().clearSelection();
+        cmbCategorias.getSelectionModel().clearSelection();
+    }
+    
+    public void cargarDatos(){
         tblProductos.setItems(listarProductos());
         colProductoId.setCellValueFactory(new PropertyValueFactory<Producto, Integer> ("productoId"));
         colNombre.setCellValueFactory(new PropertyValueFactory<Producto, String> ("nombreProducto"));

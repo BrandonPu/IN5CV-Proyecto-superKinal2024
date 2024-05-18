@@ -36,8 +36,8 @@
       <ComboBox fx:id="cmbProducto" layoutX="567.0" layoutY="107.0" prefHeight="34.0" prefWidth="251.0" />
       <Button fx:id="btnGuardar" alignment="CENTER" layoutX="182.0" layoutY="605.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="46.0" prefWidth="130.0" text="Guardar" />
       <Button fx:id="btnVaciar" alignment="CENTER" layoutX="1069.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="46.0" prefWidth="99.0" text="Vaciar Form" />
-      <Button fx:id="btnRegresar" alignment="CENTER" layoutX="936.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="46.0" prefWidth="99.0" text="Eliminar" />
-      <Button fx:id="btnRegresar1" layoutX="1001.0" layoutY="591.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Regresar">
+      <Button fx:id="btnEliminar" alignment="CENTER" layoutX="936.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="46.0" prefWidth="99.0" text="Eliminar" />
+      <Button fx:id="btnRegresar" layoutX="1001.0" layoutY="591.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Regresar">
          <font>
             <Font name="System Italic" size="18.0" />
          </font>

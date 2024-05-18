@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -26,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.brandonpu.dao.Conexion;
 import org.brandonpu.model.Cargo;
 import org.brandonpu.system.Main;
+import org.brandonpu.utils.SuperKinalAlert;
 
 /**
  * FXML Controller class
@@ -42,7 +44,7 @@ public class MenuCargoController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
-    Button btnRegresar, btnGuardar, btnVaciar, btnEliminar, btnBuscar;
+    Button btnRegresar, btnGuardar, btnVaciar, btnEliminar, btnBuscar, btnEditar;
     @FXML
     TableView tblCargos;
     @FXML
@@ -60,18 +62,32 @@ public class MenuCargoController implements Initializable {
             tblCargos.getItems().clear();
             if(!tfNombreCargo.getText().equals("")){
                 agregarCargo();
+                SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
                 cargarDatos();
             } else{
-                editarCargo();
-                cargarDatos();
+                SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                tfNombreCargo.requestFocus();
+                return;
+            }  
+        }else if(event.getSource() == btnEditar){
+             if(!tfNombreCargo.getText().equals("") && !taDescripcion.getText().equals("")){
+                if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
+                    editarCargo();
+                    cargarDatos();
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    tfNombreCargo.requestFocus();
+                    return;
+                }  
             }
         } else if(event.getSource() == btnVaciar){
             vaciarCampos();
-            
         }else if(event.getSource() == btnEliminar){
-            int carId = ((Cargo)tblCargos.getSelectionModel().getSelectedItem()).getCargoId();
-            eliminarCargo(carId);
-            cargarDatos();
+            if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(405).get() == ButtonType.OK){
+                int carId = ((Cargo)tblCargos.getSelectionModel().getSelectedItem()).getCargoId();
+                eliminarCargo(carId);
+                cargarDatos();
+            }
         } else if(event.getSource() == btnBuscar){
             tblCargos.getItems().clear();
             if(tfCargoId.getText().equals("")){

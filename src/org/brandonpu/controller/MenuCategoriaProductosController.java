@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -26,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.brandonpu.dao.Conexion;
 import org.brandonpu.model.CategoriaProducto;
 import org.brandonpu.system.Main;
+import org.brandonpu.utils.SuperKinalAlert;
 
 /**
  * FXML Controller class
@@ -58,17 +60,28 @@ public class MenuCategoriaProductosController implements Initializable {
             tblCategoriaProductos.getItems().clear();
             if(tfCategoriaProductoId.getText().equals("")){
                 agregarCategoria();
+                SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
                 cargarDatos();
             }else{
-                editarCategoria();
-                cargarDatos();
+                if(!tfNombreCategoria.getText().equals("") && !taDescripcion.getText().equals("")){
+                    if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
+                        editarCategoria();
+                        cargarDatos();
+                    }
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    tfNombreCategoria.requestFocus();
+                    return;
+                }  
             }
         } else if(event.getSource() == btnVaciar){
             vaciarCampos();
         } else if(event.getSource() == btnEliminar){
-            int catId = ((CategoriaProducto)tblCategoriaProductos.getSelectionModel().getSelectedItem()).getCategoriaProductoId();
-            eliminarCategoria(catId);
-            cargarDatos();
+            if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(405).get() == ButtonType.OK){
+                int catId = ((CategoriaProducto)tblCategoriaProductos.getSelectionModel().getSelectedItem()).getCategoriaProductoId();
+                eliminarCategoria(catId);
+                cargarDatos();
+            }
         } else if(event.getSource() == btnBuscar){
             tblCategoriaProductos.getItems().clear();
             if(tfCategoriaId.getText().equals("")){

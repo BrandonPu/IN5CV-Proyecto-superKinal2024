@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -28,6 +29,7 @@ import org.brandonpu.dao.Conexion;
 import org.brandonpu.model.Producto;
 import org.brandonpu.model.Promocion;
 import org.brandonpu.system.Main;
+import org.brandonpu.utils.SuperKinalAlert;
 
 /**
  * FXML Controller class
@@ -63,10 +65,15 @@ public class MenuPromocionesController implements Initializable {
         }else if(event.getSource() == btnGuardar){
             if(tfPromocionId.getText().equals("")){
                 agregarPromociones();
+                SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
                 cargarDatos();
             }else{
-                editarPromociones();
-                    cargarDatos();
+                if(!taDescripcion.getText().equals("")){
+                    if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
+                        editarPromociones();
+                        cargarDatos();
+                    }
+                }
             }
         }else if(event.getSource() == btnVaciar){
             vaciarCampos();
