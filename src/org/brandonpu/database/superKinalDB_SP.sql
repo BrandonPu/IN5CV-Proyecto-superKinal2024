@@ -9,7 +9,7 @@ BEGIN
 END $$
 DELIMITER ;
 
-
+select * from Usuarios;
 -- SP agregar Usuario
 DELIMITER $$
 CREATE PROCEDURE sp_agregarUsuario(us varchar(30), con varchar(100), nivAccId int, empId int)

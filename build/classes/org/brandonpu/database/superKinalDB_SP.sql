@@ -9,7 +9,7 @@ BEGIN
 END $$
 DELIMITER ;
 
-
+select * from Usuarios;
 -- SP agregar Usuario
 DELIMITER $$
 CREATE PROCEDURE sp_agregarUsuario(us varchar(30), con varchar(100), nivAccId int, empId int)
@@ -264,7 +264,6 @@ BEGIN
     SELECT * FROM TicketSoporte WHERE ticketSoporteId = ticSopId;
 END $$
 DELIMITER ;
-
 
 DELIMITER $$
 CREATE PROCEDURE sp_editarTicketSoporte(ticSopId int,des varchar(250),est varchar(30),cliId int,facId int)

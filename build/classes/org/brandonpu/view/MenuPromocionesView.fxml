@@ -10,6 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.brandonpu.controller.MenuPromocionesController">
    <children>
@@ -20,7 +21,7 @@
       </ImageView>
       <TextField fx:id="tfPromocionId" layoutX="14.0" layoutY="142.0" prefHeight="34.0" prefWidth="242.0" promptText="Promoción ID" />
       <TextField fx:id="tfPrecio" layoutX="14.0" layoutY="214.0" prefHeight="34.0" prefWidth="242.0" promptText="Precio de la Promoción" />
-      <TextField fx:id="tfFechaInicio" layoutX="25.0" layoutY="449.0" prefHeight="25.0" prefWidth="200.0" promptText="Fecha de Inicio de la Promoción" />
+      <TextField fx:id="tfFechaInicio" editable="false" layoutX="25.0" layoutY="449.0" prefHeight="25.0" prefWidth="200.0" promptText="Fecha de Inicio de la Promoción" />
       <TextField fx:id="tfFechaFinalizacion" layoutX="14.0" layoutY="536.0" prefHeight="34.0" prefWidth="290.0" promptText="Fecha de Finalización" />
       <TextArea fx:id="taDescripcion" layoutX="14.0" layoutY="299.0" prefHeight="101.0" prefWidth="290.0" promptText="Máximo 100 palabras." />
       <TableView fx:id="tblPromociones" layoutX="369.0" layoutY="153.0" onMouseClicked="#cargarDatosEditar" prefHeight="350.0" prefWidth="800.0">
@@ -42,5 +43,8 @@
             <Font name="System Italic" size="18.0" />
          </font>
       </Button>
+      <Text layoutX="21.0" layoutY="488.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No poner nada es automatico el Inicio" wrappingWidth="321.33674240112305" />
+      <Text layoutX="567.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Poner la factura Id manual hasta " wrappingWidth="313.6000244140625" />
+      <Text layoutX="567.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="que se arregle Gracias (Para el editar)" wrappingWidth="250.39999999999998" />
    </children>
 </AnchorPane>
