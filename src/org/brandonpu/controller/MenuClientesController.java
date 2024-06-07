@@ -26,6 +26,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.brandonpu.dao.Conexion;
 import org.brandonpu.dto.ClienteDTO;
 import org.brandonpu.model.Cliente;
+import org.brandonpu.report.GenerarReporte;
 import org.brandonpu.system.Main;
 import org.brandonpu.utils.SuperKinalAlert;
 
@@ -42,7 +43,7 @@ public class MenuClientesController implements Initializable {
     private static ResultSet resultSet = null;
     
     @FXML
-    Button btnAgregarClientes, btnRegresarMenu, btnEditar, btnEliminar, btnBuscar;
+    Button btnAgregarClientes,btnReportes, btnRegresarMenu, btnEditar, btnEliminar, btnBuscar;
     @FXML
     TableView tblClientes;
     @FXML
@@ -87,6 +88,8 @@ public class MenuClientesController implements Initializable {
                 colDireccion.setCellValueFactory(new PropertyValueFactory<Cliente, String> ("direccion"));
                 colNit.setCellValueFactory(new PropertyValueFactory<Cliente, String> ("nit"));
             }
+        } else if(event.getSource() == btnReportes){
+            GenerarReporte.getInstance().generarClientes();
         }
     } 
     

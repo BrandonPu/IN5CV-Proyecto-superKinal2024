@@ -43,7 +43,9 @@ public class MenuTicketSoporteController implements Initializable {
     private static Connection conexion = null;
     private static PreparedStatement statement = null;
     private static ResultSet resultSet = null;
-    
+    /**
+     * Initializes the controller class.
+     */
     @FXML
     ComboBox cmbEstatus, cmbClientes,cmbFacturas;
     @FXML
@@ -80,7 +82,7 @@ public class MenuTicketSoporteController implements Initializable {
             tblTickets.getItems().clear();
             if(tfTicketId.getText().equals("")){
                 cargarDatos();
-            }else{
+            }/*else{
                 tblTickets.getItems().add(buscarTicket());
                 colTicketId.setCellValueFactory(new PropertyValueFactory<TicketSoporte, Integer>("ticketSoporteId"));
                 colDescripcion.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("descripcionTicket"));
@@ -88,8 +90,27 @@ public class MenuTicketSoporteController implements Initializable {
                 colCliente.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("clienteId"));
                 colFactura.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("facturaId"));
         
-            }
+            }*/
         }
+    }
+    
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        cargarCmbEstatus();
+        cmbClientes.setItems(listarClientes());
+        cmbFacturas.setItems(listarFactura());
+        cargarDatos();
+    }    
+    
+    // Cargar datos tableView
+    public void cargarDatos(){
+        tblTickets.setItems(listarTickets());
+        colTicketId.setCellValueFactory(new PropertyValueFactory<TicketSoporte, Integer>("ticketSoporteId"));
+        colDescripcion.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("descripcionTicket"));
+        colEstatus.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("estatus"));
+        colCliente.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("cliente"));
+        colFactura.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("factura"));
+        tblTickets.getSortOrder().add(colTicketId);
     }
     
     //Vaciar todos los campos para poder agregar un nuevo ticket
@@ -101,18 +122,6 @@ public class MenuTicketSoporteController implements Initializable {
         cmbFacturas.getSelectionModel().clearSelection();
     }
     
-    // Cargar datos tableView
-    public void cargarDatos(){
-        tblTickets.setItems(listarTickets());
-        colTicketId.setCellValueFactory(new PropertyValueFactory<TicketSoporte, Integer>("ticketSoporteId"));
-        colDescripcion.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("descripcionTicket"));
-        colEstatus.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("estatus"));
-        colCliente.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("cliente"));
-        colFactura.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("facturaId"));
-        tblTickets.getSortOrder().add(colTicketId);
-    }
-    
-    // Carga datos a editar
     public void cargarDatosEditar(){
         TicketSoporte ts = (TicketSoporte)tblTickets.getSelectionModel().getSelectedItem();
         if(ts != null){
@@ -120,10 +129,15 @@ public class MenuTicketSoporteController implements Initializable {
             taDescripcion.setText(ts.getDescripcionTicket());
             cmbEstatus.getSelectionModel().select(0);
             cmbClientes.getSelectionModel().select(obtenerIndexCliente());
+            cmbFacturas.getSelectionModel().select(obtenerIndexFactura());
         }
     }
     
-    // cargar comboBox de clientes
+    public void cargarCmbEstatus(){
+        cmbEstatus.getItems().add("En Proceso");
+        cmbEstatus.getItems().add("Finalizado");
+    }
+    
     public int obtenerIndexCliente(){
         int index = 0;
         for(int i = 0 ; i <= cmbClientes.getItems().size() ; i++){
@@ -136,14 +150,47 @@ public class MenuTicketSoporteController implements Initializable {
         }
         return index;
     }
-
-    // Cargar combobox status
-    public void cargarCmbEstatus(){
-        cmbEstatus.getItems().add("En Proceso");
-        cmbEstatus.getItems().add("Finalizado");
+    
+    public int obtenerIndexFactura(){
+        int index1 = 0;
+        for(int i = 0 ; i <= cmbFacturas.getItems().size() ; i++){
+             String facturaCmb = cmbFacturas.getItems().get(i).toString();
+            String facturaTbl = ((TicketSoporte)tblTickets.getSelectionModel().getSelectedItem()).getFactura();
+            if(facturaCmb.equals(facturaTbl)){
+                index1 = i;
+                break;
+            }
+        }
+        return index1;
     }
     
-   // Cargar sp_listarTicketsSoporte a la base de datos
+    public void editarTicket(){
+        try{
+            conexion = Conexion.getInstance().obtenerConexion();
+            String sql = "call sp_editarTicketSoporte(?,?,?,?,?)";
+            statement = conexion.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(tfTicketId.getText()));
+            statement.setString(2, taDescripcion.getText());
+            statement.setString(3, cmbEstatus.getSelectionModel().getSelectedItem().toString());
+            statement.setInt(4, ((Cliente)cmbClientes.getSelectionModel().getSelectedItem()).getClienteId());
+            statement.setInt(5, ((Factura)cmbFacturas.getSelectionModel().getSelectedItem()).getFacturaId());
+            statement.execute();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }finally{
+            try{
+                if(statement != null){
+                    statement.close();
+                }
+                if(conexion != null){
+                    conexion.close();
+                }
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    
     public ObservableList<TicketSoporte> listarTickets(){
         ArrayList<TicketSoporte> tickets = new ArrayList<>();
         
@@ -158,9 +205,9 @@ public class MenuTicketSoporteController implements Initializable {
                 String descripcion = resultSet.getString("descripcionTicket");
                 String estatus = resultSet.getString("estatus");
                 String cliente = resultSet.getString("cliente");
-                int facturaId = resultSet.getInt("facturaId");
+                String factura = resultSet.getString("factura");
                 
-                tickets.add(new TicketSoporte(ticketSoporteId, descripcion, estatus, cliente, facturaId));
+                tickets.add(new TicketSoporte(ticketSoporteId, descripcion, estatus, cliente, factura));
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -182,13 +229,37 @@ public class MenuTicketSoporteController implements Initializable {
         return FXCollections.observableList(tickets);
     }
     
-  // Cargar sp_listarClientes a la base de datos (llenar el comboBox clientes)
+    public void agregarTicket(){
+        try{
+            conexion = Conexion.getInstance().obtenerConexion();
+            String sql = "call sp_agregarTicketSoporte(?,?,?)";
+            statement = conexion.prepareStatement(sql);
+            statement.setString(1, taDescripcion.getText());
+            statement.setInt(2, ((Cliente)cmbClientes.getSelectionModel().getSelectedItem()).getClienteId());
+            statement.setInt(3, ((Factura)cmbFacturas.getSelectionModel().getSelectedItem()).getFacturaId());
+            statement.execute();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }finally{
+            try{
+                if(statement != null){
+                    statement.close();
+                }
+                if(conexion != null){
+                    conexion.close();
+                }
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    
     public ObservableList<Cliente> listarClientes(){
         ArrayList<Cliente> clientes = new ArrayList<>();
         
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_listarClientes()";
+            String sql = "call sp_listarclientes()";
             statement = conexion.prepareStatement(sql);
             resultSet = statement.executeQuery();
             
@@ -262,106 +333,7 @@ public class MenuTicketSoporteController implements Initializable {
         
         return FXCollections.observableList(factura);
     }
-    
-    public void agregarTicket(){
-        try{
-            conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_agregarTicketSoporte(?,?,?)";
-            statement = conexion.prepareStatement(sql);
-            statement.setString(1, taDescripcion.getText());
-            statement.setInt(2, ((Cliente)cmbClientes.getSelectionModel().getSelectedItem()).getClienteId());
-            statement.setInt(3, ((Factura)cmbFacturas.getSelectionModel().getSelectedItem()).getFacturaId());
-            statement.execute();
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
-        }finally{
-            try{
-                if(statement != null){
-                    statement.close();
-                }
-                if(conexion != null){
-                    conexion.close();
-                }
-            }catch(SQLException e){
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-    
-     public void editarTicket(){
-        try{
-            conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_editarTicketSoporte(?,?,?,?,?)";
-            statement = conexion.prepareStatement(sql);
-            statement.setInt(1, Integer.parseInt(tfTicketId.getText()));
-            statement.setString(2, taDescripcion.getText());
-            statement.setString(3, cmbEstatus.getSelectionModel().getSelectedItem().toString());
-            statement.setInt(4, ((Cliente)cmbClientes.getSelectionModel().getSelectedItem()).getClienteId());
-            statement.setInt(5, ((Factura)cmbFacturas.getSelectionModel().getSelectedItem()).getFacturaId());
-            statement.execute();
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
-        }finally{
-            try{
-                if(statement != null){
-                    statement.close();
-                }
-                if(conexion != null){
-                    conexion.close();
-                }
-            }catch(SQLException e){
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-     
-    public TicketSoporte buscarTicket(){
-        TicketSoporte ticketSoporte = null;
-        try{
-            conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_buscarTicketSoporte(?)";
-            statement = conexion.prepareStatement(sql);
-            statement.setInt(1, Integer.parseInt(tfTicketId.getText()));
-            resultSet = statement.executeQuery();
-            
-            if(resultSet.next()){
-                int ticketSoporteId = resultSet.getInt("ticketSoporteId");
-                String descripcion = resultSet.getString("descripcionTicket");
-                String estatus = resultSet.getString("estatus");
-                String cliente = resultSet.getString("clienteId");
-                int facturaId = resultSet.getInt("facturaId");
-                
-                ticketSoporte = (new TicketSoporte(ticketSoporteId, descripcion, estatus, cliente, facturaId));
-            }
-        }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }finally{
-            try{
-                if(resultSet != null){
-                    resultSet.close();
-                }
-                if(statement != null){
-                    statement.close();
-                }
-                if(conexion != null){
-                    conexion.close();
-                }
-            }catch(SQLException e){
-                System.out.println(e.getMessage());
-            }
-        }
-        
-        return ticketSoporte;
-    }
-     
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        cargarCmbEstatus();
-        cmbClientes.setItems(listarClientes());
-        cmbFacturas.setItems(listarFactura());
-        cargarDatos();
-    }    
-
+   
     public Main getStage() {
         return stage;
     }

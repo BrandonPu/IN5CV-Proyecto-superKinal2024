@@ -102,7 +102,7 @@ public class MenuPromocionesController implements Initializable {
                 String descripcionPromocion = resultSet.getString("descripcionPromocion");
                 String fechaInicio = resultSet.getString("fechaInicio");
                 String fechaFinalizacion = resultSet.getString("fechaFInalizacion");
-                String nombreProducto = resultSet.getString("nombreProducto");
+                String nombreProducto = resultSet.getString("producto");
                                
                 promociones.add(new Promocion(promocionId, precioPromocion, descripcionPromocion, fechaInicio, fechaFinalizacion, nombreProducto));
             }
@@ -144,25 +144,22 @@ public class MenuPromocionesController implements Initializable {
             taDescripcion.setText(pn.getDescripcionPromocion());
             tfFechaInicio.setText(pn.getFechaInicio());
             tfFechaFinalizacion.setText(pn.getFechaFinalizacion());
-
+            cmbProducto.getSelectionModel().select(obtenerIndexProducto());
         }
     }
     
     public int obtenerIndexProducto(){
         int index = 0;
-        for(int i = 0 ; i <= cmbProducto.getItems().size() ; i++){
+        for(int i = 0 ; i < cmbProducto.getItems().size() ; i++){
             String productoCmb = cmbProducto.getItems().get(i).toString();
-            String productoTbl = ((Promocion)tblPromociones.getSelectionModel().getSelectedItems()).getProducto();
+            String productoTbl = ((Promocion)tblPromociones.getSelectionModel().getSelectedItem()).getProducto();
             if(productoCmb.equals(productoTbl)){
                 index = i;
                 break;
             }
-            
         }
         return index;
     }
-    
-   
 
     public int obtenerIndexPromocion() {
         int index = 0;

@@ -1,5 +1,15 @@
 use superKinalDB;
 
+-- Asignar Total 
+DELIMITER $$
+create procedure sp_asignarTotal(in tot decimal(10,2), in facId int)
+BEGIN
+	update Facturas
+		set total = tot
+			where facturaId = facId;
+END $$
+DELIMITER ;
+
 -- Buscar Usuario
 DELIMITER $$
 CREATE PROCEDURE sp_buscarUsuario(us varchar(30))
@@ -9,7 +19,6 @@ BEGIN
 END $$
 DELIMITER ;
 
-select * from Usuarios;
 -- SP agregar Usuario
 DELIMITER $$
 CREATE PROCEDURE sp_agregarUsuario(us varchar(30), con varchar(100), nivAccId int, empId int)
@@ -95,7 +104,6 @@ BEGIN
     LEFT JOIN Empleados E ON EP.encargadoId = E.empleadoId;
 END $$
 DELIMITER ;
-call sp_listarEmpleados();
 
 DELIMITER $$
 CREATE PROCEDURE sp_eliminarEmpleado(empId int)
@@ -131,6 +139,10 @@ DELIMITER ;
 DELIMITER $$	
 create procedure sp_agregarCliente(nom varchar(30), ape varchar(30), tel varchar(15), dir varchar(150), nit varchar(15))
 begin
+	If nit is null or nit = '' then
+		set nit = 'CF';
+	END IF;
+    
 	insert into Clientes(nombre, apellido, telefono, direccion, nit) values
 		(nom, ape, tel, dir, nit);
 end $$
@@ -171,7 +183,6 @@ begin
 			where clienteId = cliId;
 end $$
 DELIMITER ;
-
 
 -- ******** Facturas ******** --
 DELIMITER $$
@@ -246,8 +257,9 @@ CREATE PROCEDURE sp_listarTicketsSoporte()
 BEGIN
     select TS.ticketSoporteId, TS.descripcionTicket, TS.estatus,
 			CONCAT('Id: ', C.clienteId, ' | ', C.nombre, ' ', C.apellido) AS 'cliente',
-            TS.facturaId from TicketSoporte TS
-    join Clientes C on TS.clienteId = C.clienteId;
+            CONCAT('Id: ', F.facturaId, ' | fecha: ', F.fecha, ' ', F.hora) AS 'factura' from TicketSoporte TS
+    join Clientes C on TS.clienteId = C.clienteId
+    join Facturas F ON TS.facturaId = F.facturaId;
 END $$
 DELIMITER ;
 
@@ -380,7 +392,7 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE sp_listarProductos()
 BEGIN
-     SELECT P.productoId, P.nombreProducto, P.descripcionProducto, P.cantidadStock, P.precioVentaUnitario, P.precioVentaMayor,
+     SELECT P.productoId, P.nombreProducto, P.descripcionProducto, P.cantidadStock, P.precioVentaUnitario, P.precioVentaMayor, P.precioCompra, P.imagenProducto,
         CONCAT('Id: ', D.distribuidorId, '| ',D.nombreDistribuidor)AS 'Distribuidor',
 		CONCAT('Id: ', C.categoriaProductosId, '| ',C.nombreCategoria)AS 'Categoria'
 		FROM Productos P
@@ -389,7 +401,6 @@ BEGIN
 END $$
 DELIMITER ;
 
-call 
 DELIMITER $$
 CREATE PROCEDURE sp_eliminarProducto(prodId int)
 BEGIN
@@ -397,14 +408,14 @@ BEGIN
 END $$
 DELIMITER ;
 
-
 DELIMITER $$
-CREATE PROCEDURE sp_buscarProducto(prodId int)
+create PROCEDURE sp_buscarProducto(proId int)
 BEGIN
-    SELECT * FROM Productos WHERE productoId = prodId;
+    SELECT P.productoId, P.nombreProducto, P.descripcionProductos, P.cantidadStock, P.precioVentaUnitario, P.precioVentaMayor, P.precioCompra, P.imagenProducto
+		FROM Productos P
+		WHERE productoId = proId;
 END $$
 DELIMITER ;
-call sp_buscarProducto(1);
 
 DELIMITER $$
 CREATE PROCEDURE sp_editarProducto(prodId int,nom varchar(50),des varchar(100),cant int,pvu decimal(10,2),pvm decimal(10,2),pc decimal(10,2),img LONGBLOB,disId int,catId int)
@@ -424,13 +435,12 @@ BEGIN
 END $$
 DELIMITER ;
 
-
 -- *********** Compras ************** --
 DELIMITER $$
-CREATE PROCEDURE sp_agregarCompra(fec date,tot decimal(10,2))
+CREATE PROCEDURE sp_agregarCompra(tot decimal(10,2))
 BEGIN
     INSERT INTO Compras(fechaCompra, totalCompra)
-    VALUES (fec, tot);
+    VALUES (DATE(NOW()), tot);
 END $$
 DELIMITER ;
 
@@ -466,8 +476,7 @@ BEGIN
 END $$
 DELIMITER ;
 
-
--- *********** DetalleProductos ********** --
+-- *********** DetalleCompra ********** --
 DELIMITER $$
 CREATE PROCEDURE sp_agregarDetalleCompra(cant int,prodId int,comId int)
 BEGIN
@@ -477,9 +486,15 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE sp_listarDetalleCompras()
+create PROCEDURE sp_listarDetalleCompras()
 BEGIN
-    SELECT * FROM DetalleCompra;
+    SELECT 
+		DC.detalleCompraId, DC.cantidadCompra,
+        CONCAT('Id: ',P.productoId ,'| ', P.nombreProducto)AS 'producto',
+        CONCAT('Id: ',C.compraId, '| fecha: ', fechaCompra , ' | total: ' , totalCompra)AS 'compra'
+			FROM DetalleCompra DC
+            JOIN Productos P on DC.productoId = P.productoId
+            JOIN Compras C on DC.compraId = C.compraId;
 END $$
 DELIMITER ;
 
@@ -521,8 +536,8 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE sp_listarPromociones()
 BEGIN
-    select PS.promocionId, PS.precioPromocion, PS.descripcionPromocion, PS.fechaInicio, PS.fechaFinalizacion,  
-			P.nombreProducto from Promociones PS
+    select PS.promocionId, PS.precioPromocion, PS.descripcionPromocion, PS.fechaInicio, PS.fechaFinalizacion,
+		CONCAT('Id: ',P.productoId, '| ',P.nombreProducto)AS 'producto' from Promociones PS
             join Productos P on PS.productoId = P.productoId;
 END $$
 DELIMITER ;
@@ -567,10 +582,15 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE sp_listarDetalleFacturas()
 BEGIN
-    SELECT * FROM DetalleFactura;
+    SELECT  DF.detalleFacturaId,
+			CONCAT('Id: ', F.facturaId, ' | fecha: ' , F.fecha, ' ',F.hora) AS 'factura',
+            CONCAT('Id: ',P.productoId, '| ', P.nombreProducto)AS 'producto'
+	FROM DetalleFactura DF
+	JOIN Facturas F on DF.facturaId = F.facturaId
+    JOIN Productos P on DF.productoId = P.productoId;
 END $$
 DELIMITER ;
-
+  
 DELIMITER $$
 CREATE PROCEDURE sp_eliminarDetalleFactura(detFacId int)
 BEGIN
@@ -595,7 +615,6 @@ BEGIN
     WHERE detalleFacturaId = detFacId;
 END $$
 DELIMITER ;
-
 
 -- ***************** Asignar Encargado **********************
 DELIMITER $$

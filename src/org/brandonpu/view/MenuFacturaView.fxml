@@ -9,43 +9,78 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="750.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.brandonpu.controller.MenuFacturaController">
+<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.brandonpu.controller.MenuFacturaController">
    <children>
-      <ImageView fitHeight="750.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="900.0" fitWidth="1600.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../image/FondoMenuFactura.png" />
          </image>
       </ImageView>
-      <TextField fx:id="tfFacturaId" editable="false" layoutX="1007.0" layoutY="160.0" prefHeight="38.0" prefWidth="174.0" style="-fx-background-radius: 10;" />
-      <ComboBox fx:id="cmbClienteId" layoutX="482.0" layoutY="160.0" prefHeight="38.0" prefWidth="218.0" />
-      <ComboBox fx:id="cmbEmpleadoId" layoutX="732.0" layoutY="160.0" prefHeight="38.0" prefWidth="231.0" />
-      <TableView fx:id="tblFacturas" layoutX="14.0" layoutY="205.0" onMouseClicked="#cargarDatosEditar" prefHeight="400.0" prefWidth="950.0">
+      <TextField fx:id="tfFacturaId" editable="false" layoutX="14.0" layoutY="168.0" prefHeight="38.0" prefWidth="174.0" style="-fx-background-radius: 10;" />
+      <ComboBox fx:id="cmbClienteId" layoutX="491.0" layoutY="168.0" prefHeight="38.0" prefWidth="218.0" />
+      <ComboBox fx:id="cmbEmpleadoId" layoutX="217.0" layoutY="168.0" prefHeight="38.0" prefWidth="231.0" />
+      <TableView fx:id="tblFacturas" layoutX="390.0" layoutY="250.0" onMouseClicked="#cargarDatosEditar" prefHeight="400.0" prefWidth="700.0">
         <columns>
-          <TableColumn fx:id="colFacturaId" minWidth="100.0" prefWidth="75.0" text="facturaId" />
-          <TableColumn fx:id="colFecha" minWidth="175.0" prefWidth="75.0" text="fecha" />
-            <TableColumn fx:id="colHora" minWidth="175.0" prefWidth="75.0" text="hora" />
-            <TableColumn fx:id="colClienteId" minWidth="175.0" prefWidth="75.0" text="clienteId" />
-            <TableColumn fx:id="colEmpleadoId" minWidth="175.0" prefWidth="75.0" text="empleadoId" />
-            <TableColumn fx:id="colTotal" minWidth="150.0" prefWidth="75.0" text="total" />
+          <TableColumn fx:id="colFacturaId" minWidth="82.4000244140625" prefWidth="82.4000244140625" text="facturaId" />
+          <TableColumn fx:id="colFecha" minWidth="112.79995727539062" prefWidth="126.39993286132812" text="fecha" />
+            <TableColumn fx:id="colHora" minWidth="108.0" prefWidth="108.0" text="hora" />
+            <TableColumn fx:id="colClienteId" minWidth="116.0" prefWidth="136.0" text="clienteId" />
+            <TableColumn fx:id="colEmpleadoId" minWidth="116.0" prefWidth="141.5999755859375" text="empleadoId" />
+            <TableColumn fx:id="colTotal" minWidth="102.4000244140625" prefWidth="102.4000244140625" text="total" />
         </columns>
       </TableView>
-      <Button fx:id="btnRegresar" layoutX="1007.0" layoutY="622.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Regresar">
+      <Button fx:id="btnRegresar" layoutX="113.0" layoutY="791.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Regresar">
          <font>
             <Font name="System Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnGuardar" layoutX="1007.0" layoutY="238.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Guardar">
+      <Button fx:id="btnGuardar" layoutX="723.0" layoutY="162.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="122.0" style="-fx-background-radius: 10;" text="Guardar">
          <font>
             <Font name="System Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnEliminar" disable="true" layoutX="1007.0" layoutY="375.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Eliminar">
+      <Button fx:id="btnEliminar" disable="true" layoutX="729.0" layoutY="103.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Eliminar">
          <font>
             <Font name="System Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnVaciar" layoutX="1001.0" layoutY="494.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="121.0" style="-fx-background-radius: 10;" text="Vaciar Form">
+      <Button fx:id="btnVaciar" layoutX="866.0" layoutY="162.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="122.0" style="-fx-background-radius: 10;" text="Vaciar Form">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <TextField fx:id="tfDetalleFacturaId" layoutX="24.0" layoutY="373.0" prefHeight="38.0" prefWidth="263.0" promptText="Detalle Factura Id" />
+      <ComboBox fx:id="cmbFactura" layoutX="23.0" layoutY="466.0" prefHeight="38.0" prefWidth="317.0" />
+      <ComboBox fx:id="cmbProducto" layoutX="26.0" layoutY="576.0" prefHeight="38.0" prefWidth="310.0" />
+      <TableView fx:id="tblDetalleFactura" layoutX="1135.0" layoutY="250.0" onMouseClicked="#cargarDatosEditarDF" prefHeight="400.0" prefWidth="450.0">
+         <columns>
+            <TableColumn fx:id="colDetalleFacturaId" prefWidth="119.199951171875" text="DetalleFacturaId" />
+            <TableColumn fx:id="colFactura" prefWidth="162.39990234375" text="Factura" />
+            <TableColumn fx:id="colProducto" prefWidth="167.2000732421875" text="Producto" />
+         </columns>
+      </TableView>
+      <Button fx:id="btnGuardarDF" layoutX="205.0" layoutY="644.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="43.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Guardar">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnVaciarDF" layoutX="58.0" layoutY="644.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="43.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Vaciar Form">
+         <font>
+            <Font name="System Italic" size="15.0" />
+         </font>
+      </Button>
+      <TextField fx:id="tfTotal" alignment="CENTER" editable="false" layoutX="1360.0" layoutY="761.0" prefHeight="60.0" prefWidth="174.0" promptText="Total de la factura" style="-fx-background-radius: 15;">
+         <font>
+            <Font name="Arial" size="19.0" />
+         </font></TextField>
+      <Text fill="#924792" layoutX="1270.0" layoutY="803.0" stroke="#f50000" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:" textAlignment="CENTER" wrappingWidth="81.3367919921875">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnVerFactura" layoutX="1258.0" layoutY="162.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="122.0" style="-fx-background-radius: 10;" text="Ver Factura">
          <font>
             <Font size="18.0" />
          </font>

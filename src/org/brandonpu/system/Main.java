@@ -23,10 +23,11 @@ import org.brandonpu.controller.FormUsuarioController;
 import org.brandonpu.controller.LoginController;
 import org.brandonpu.controller.MenuCargoController;
 import org.brandonpu.controller.MenuCategoriaProductosController;
+import org.brandonpu.controller.MenuComprasController;
 import org.brandonpu.controller.MenuEmpleadosController;
 import org.brandonpu.controller.MenuFacturaController;
 import org.brandonpu.controller.MenuPrincipalController;
-import org.brandonpu.controller.MenuProductosController;
+import org.brandonpu.controller.MenuProductoController;
 import org.brandonpu.controller.MenuPromocionesController;
 import org.brandonpu.controller.MenuTicketSoporteController;
 
@@ -45,8 +46,9 @@ public class Main extends Application {
         Image icon = new Image("/org/brandonpu/image/icon.png");
         stage.setTitle("Super Kinal APP");
         stage.getIcons().add(icon);
+        menuPrincipalView();
         //formUsuarioView();  //Si no se tiene datos de los usuarios ponerlo del aqui
-        loginView();
+        //loginView();
         stage.show();
     }
     
@@ -172,7 +174,7 @@ public class Main extends Application {
     
     public void menuFacturaView(){
         try{
-            MenuFacturaController menuFacturaView = (MenuFacturaController)switchScene("MenuFacturaView.fxml", 1200,750);
+            MenuFacturaController menuFacturaView = (MenuFacturaController)switchScene("MenuFacturaView.fxml", 1600,900);
             menuFacturaView.setStage(this);
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -182,8 +184,8 @@ public class Main extends Application {
     
     public void menuProductosView(){
         try{
-            MenuProductosController menuProductosView = (MenuProductosController)switchScene("MenuProductosView.fxml", 1600,950);
-            menuProductosView.setStage(this);
+            MenuProductoController menuProductoView = (MenuProductoController)switchScene("MenuProductoView.fxml", 1600,950);
+            menuProductoView.setStage(this);
         }catch(Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -195,6 +197,16 @@ public class Main extends Application {
         try{
             MenuPromocionesController menuPromocionesView = (MenuPromocionesController)switchScene("MenuPromocionesView.fxml", 1200,700);
             menuPromocionesView.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public void menuCompraView(){
+        try{
+            MenuComprasController menuComprasView= (MenuComprasController)switchScene("MenuComprasView.fxml",1450,850);
+            menuComprasView.setStage(this);
         }catch(Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -220,6 +232,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+    
     /**
      * @param args the command line arguments
      */
