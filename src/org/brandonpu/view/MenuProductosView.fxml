@@ -97,5 +97,10 @@
          </font>
       </Label>
       <Label fx:id="lblStock" layoutX="559.0" layoutY="231.0" prefHeight="43.0" prefWidth="128.0" />
+      <Button fx:id="btnReportes" layoutX="156.0" layoutY="755.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="66.0" prefWidth="158.0" style="-fx-background-radius: 10;" text="Reportes">
+         <font>
+            <Font name="SansSerif Italic" size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

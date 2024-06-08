@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Clientes" pageWidth="550" pageHeight="800" columnWidth="510" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4288fa51-626b-469c-90b5-02a0b87d3d43">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="superKinalDB"/>
@@ -68,10 +68,6 @@
 	</background>
 	<title>
 		<band height="140" splitType="Stretch">
-			<image>
-				<reportElement x="390" y="-10" width="140" height="140" uuid="cd5b6fbb-ec90-400f-a8e9-4c55dbfeab25"/>
-				<imageExpression><![CDATA["C:/Users/informatica/Desktop/Proyecto/Proyecto SuperKinal/IN5CV-Proyecto-superKinal2024/src/org/brandonpu/image/SuperKinal.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="130" y="0" width="160" height="60" uuid="fb2573ca-337c-4365-828b-30a23fe41d91"/>
 				<textElement>
@@ -79,6 +75,10 @@
 				</textElement>
 				<text><![CDATA[Clientes]]></text>
 			</staticText>
+			<image>
+				<reportElement x="350" y="0" width="170" height="140" uuid="0f3df312-d527-4918-9885-cb4b8dc85658"/>
+				<imageExpression><![CDATA["C:/Users/Pavilión/Documents/NetBeansProjects/Repositorios github/IN5CV-Proyecto-superKinal2024/src/org/brandonpu/image/SuperKinal.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

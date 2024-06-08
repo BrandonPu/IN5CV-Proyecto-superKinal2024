@@ -39,6 +39,7 @@ import org.brandonpu.dto.ProductoDTO;
 import org.brandonpu.model.CategoriaProducto;
 import org.brandonpu.model.Distribuidor;
 import org.brandonpu.model.Producto;
+import org.brandonpu.report.GenerarReporte;
 import org.brandonpu.system.Main;
 import org.brandonpu.utils.SuperKinalAlert;
 
@@ -59,7 +60,7 @@ public class MenuProductoController implements Initializable {
     @FXML
     ComboBox cmbDistribuidores, cmbCategorias;
     @FXML
-    Button btnRegresar,btnGuardar, btnBuscar, btnEliminar,btnVaciar;
+    Button btnRegresar,btnGuardar, btnBuscar, btnEliminar,btnVaciar,btnReportes;
     @FXML
     TextField tfProductoId, tfNombreProducto,tfUnidad, tfMayor, tfCompra, tfDistribuidor, tfCategoria, tfStock,tfBuscarProductoId ;
     @FXML
@@ -110,6 +111,8 @@ public class MenuProductoController implements Initializable {
                 }
             }else if(event.getSource() == btnVaciar){
                 vaciarCampos();
+            } else if(event.getSource() == btnReportes){
+                GenerarReporte.getInstance().generarProductos();
             }
             /*else if(event.getSource() == btnVaciar){
                 vaciarDatos();

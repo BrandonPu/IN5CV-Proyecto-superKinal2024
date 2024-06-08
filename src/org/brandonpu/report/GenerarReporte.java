@@ -59,7 +59,7 @@ public class GenerarReporte {
             
             root.getChildren().add(reportViewer);
             
-            reportViewer.setPrefSize(1000, 800);
+            reportViewer.setPrefSize(1500, 900);
             
             Scene scene = new Scene(root);
             reportStage.setScene(scene);
@@ -90,11 +90,43 @@ public class GenerarReporte {
             
             root.getChildren().add(reportViewer);
             
-            reportViewer.setPrefSize(1000, 800);
+            reportViewer.setPrefSize(1500, 900);
             
             Scene scene = new Scene(root);
             reportStage.setScene(scene);
             reportStage.setTitle("Cliente");
+            reportStage.show();
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void generarProductos(){
+        try{
+            conexion = Conexion.getInstance().obtenerConexion();
+            
+            // 2 Defino los parametros del reporte
+            Map<String, Object> parametros = new HashMap<>();
+   
+            InputStream jasperPath = GenerarReporte.class.getResourceAsStream("/org/brandonpu/report/Producto.jasper");
+            JasperPrint reporte = JasperFillManager.fillReport(jasperPath,parametros, conexion);
+            
+            // 4 Crear la ventana javafx para mostrar Reporte
+            Stage reportStage = new Stage();
+            
+            // 5 Llenar el stage con el reporte
+            JRViewerFX reportViewer = new JRViewerFX(reporte);
+            
+            Pane root = new Pane();
+            
+            root.getChildren().add(reportViewer);
+            
+            reportViewer.setPrefSize(1500, 900);
+            
+            Scene scene = new Scene(root);
+            reportStage.setScene(scene);
+            reportStage.setTitle("Productos");
             reportStage.show();
             
         }catch(Exception e){

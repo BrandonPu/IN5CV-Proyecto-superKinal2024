@@ -1,7 +1,7 @@
 use superKinalDB;
 
 DELIMITER $$
-CREATE function fn_calcularTotal(facId int) returns decimal (10,2)
+create function fn_calcularTotal(facId int) returns decimal (10,2)
 deterministic
 BEGIN
 	declare totalFinal decimal(10,2) default 0.0;
@@ -21,7 +21,7 @@ BEGIN
     fetch cursorDetalleFactura into curFacturaId, curProductoId;
     
      if facId = curFacturaId then
-		set precio = (select P.precioCompra from Productos P where P.productoId = curProductoId);
+		set precio = (select P.precioVentaUnitario from Productos P where P.productoId = curProductoId);
     
     set totalFinal = totalFinal + precio;
     set Iva = totalFinal * 0.12;

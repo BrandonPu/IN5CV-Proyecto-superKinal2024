@@ -184,7 +184,6 @@ begin
 end $$
 DELIMITER ;
 
-
 -- ******** Facturas ******** --
 DELIMITER $$
 CREATE PROCEDURE sp_agregarFactura(cliId int,empId int)

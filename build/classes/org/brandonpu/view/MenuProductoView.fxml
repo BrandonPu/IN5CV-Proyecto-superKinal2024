@@ -85,5 +85,10 @@
          </font>
       </Button>
       <ImageView fx:id="imgMostrar" fitHeight="210.0" fitWidth="312.0" layoutX="41.0" layoutY="64.0" onDragDropped="#handleOnDrop" onDragOver="#handleOnDrag" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="btnReportes" layoutX="1065.0" layoutY="876.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="139.0" style="-fx-background-radius: 10;" text="Reportes">
+         <font>
+            <Font name="SansSerif Italic" size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
