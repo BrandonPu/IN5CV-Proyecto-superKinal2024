@@ -58,27 +58,18 @@ public class MenuCargoController implements Initializable {
     public void handleButtonAction(ActionEvent event){
         if(event.getSource() == btnRegresar){
             stage.menuPrincipalView();
-        }else if(event.getSource() == btnGuardar){
-            tblCargos.getItems().clear();
-            if(!tfNombreCargo.getText().equals("")){
+        } else if(event.getSource() == btnGuardar){
+            if(tfCargosId.getText().equals("")){
                 agregarCargo();
                 SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
                 cargarDatos();
             } else{
-                SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
-                tfNombreCargo.requestFocus();
-                return;
-            }  
-        }else if(event.getSource() == btnEditar){
-             if(!tfNombreCargo.getText().equals("") && !taDescripcion.getText().equals("")){
-                if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
-                    editarCargo();
-                    cargarDatos();
-                }else{
-                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
-                    tfNombreCargo.requestFocus();
-                    return;
-                }  
+                if(!tfCargosId.getText().equals("")){
+                    if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
+                        editarCargo();
+                        cargarDatos();
+                    }
+                }
             }
         } else if(event.getSource() == btnVaciar){
             vaciarCampos();
