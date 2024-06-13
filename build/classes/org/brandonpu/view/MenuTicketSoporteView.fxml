@@ -18,7 +18,7 @@
             <Image url="@../image/FondoMenuTicketSoporte.png" />
          </image>
       </ImageView>
-      <ComboBox fx:id="cmbEstatus" layoutX="21.0" layoutY="543.0" prefHeight="40.0" prefWidth="250.0" />
+      <ComboBox fx:id="cmbEstatus" layoutX="21.0" layoutY="543.0" prefHeight="40.0" prefWidth="250.0" promptText="Recien Creado" />
       <ComboBox fx:id="cmbClientes" layoutX="304.0" layoutY="205.0" prefHeight="40.0" prefWidth="295.0" />
       <ComboBox fx:id="cmbFacturas" layoutX="642.0" layoutY="205.0" prefHeight="40.0" prefWidth="288.0" />
       <TableView fx:id="tblTickets" layoutX="425.0" layoutY="297.0" onMouseClicked="#cargarDatosEditar" prefHeight="382.0" prefWidth="766.0">
