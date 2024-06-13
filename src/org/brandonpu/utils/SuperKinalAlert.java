@@ -52,6 +52,12 @@ public class SuperKinalAlert {
             alert.setHeaderText("Contraseña incorrecta");
             alert.setContentText("Verifique la Contraseña");
             alert.showAndWait();
+        }else if(code == 45){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error al Eliminar");
+            alert.setHeaderText("Error al Eliminar");
+            alert.setContentText("No se puede eliminar porque esta ligada a otro Objeto");
+            alert.showAndWait();
         }
     }
     

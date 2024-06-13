@@ -71,12 +71,11 @@ public class AgregarDistribuidoresController implements Initializable {
             }else if(op == 2){
                 if(!tfNombreDistribuidor.getText().equals("") && !tfDireccionDistribuidor.getText().equals("") && !tfNitDistribuidor.getText().equals("") && !tfTelefonoDistribuidor.getText().equals("")){
                     if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
-                        
+                        editarDistribuidor();
+                        DistribuidorDTO.getDistribuidorDTO().setDistribuidor(null);
+                        stage.menuDistribuidorView();
                     }
                 }
-                editarDistribuidor();
-                DistribuidorDTO.getDistribuidorDTO().setDistribuidor(null);
-                stage.menuDistribuidorView();
             }
         }
     }

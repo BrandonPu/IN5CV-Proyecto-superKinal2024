@@ -9,6 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" prefHeight="850.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.brandonpu.controller.MenuEmpleadosController">
    <children>
@@ -46,7 +47,7 @@
             <Font name="System Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnEliminar" disable="true" layoutX="76.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Eliminar">
+      <Button fx:id="btnEliminar" layoutX="76.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Eliminar">
          <font>
             <Font name="System Italic" size="18.0" />
          </font>
@@ -61,5 +62,16 @@
             <Font name="System Italic" size="18.0" />
          </font>
       </Button>
+      <TextField fx:id="tfBuscarId" alignment="CENTER" layoutX="1014.0" layoutY="781.0" prefHeight="40.0" prefWidth="253.0" promptText="Ingrese el Id del Empleado a Buscar" style="-fx-background-radius: 10;" />
+      <Button fx:id="btnBuscar" layoutX="945.0" layoutY="781.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="48.0">
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/Lupa.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Text layoutX="945.0" layoutY="768.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingresar El numero del Id a buscar" wrappingWidth="253.0" />
    </children>
 </AnchorPane>

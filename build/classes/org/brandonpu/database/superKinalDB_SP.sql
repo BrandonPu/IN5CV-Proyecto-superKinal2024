@@ -112,7 +112,6 @@ BEGIN
 END $$
 DELIMITER ;
 
-select * from 
 DELIMITER $$
 CREATE PROCEDURE sp_buscarEmpleado(empId int)
 BEGIN

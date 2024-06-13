@@ -60,14 +60,26 @@ public class MenuCargoController implements Initializable {
             stage.menuPrincipalView();
         } else if(event.getSource() == btnGuardar){
             if(tfCargosId.getText().equals("")){
-                agregarCargo();
-                SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
-                cargarDatos();
+                if(!tfNombreCargo.getText().equals("") && !taDescripcion.getText().equals("")){
+                    agregarCargo();
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
+                    cargarDatos();
+                } else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    tfNombreCargo.requestFocus();
+                    return;
+                }
             } else{
                 if(!tfCargosId.getText().equals("")){
                     if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
-                        editarCargo();
-                        cargarDatos();
+                        if(!tfNombreCargo.getText().equals("") && !taDescripcion.getText().equals("")){
+                            editarCargo();
+                            cargarDatos();
+                        } else{
+                            SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                            tfNombreCargo.requestFocus();
+                            return;
+                        }
                     }
                 }
             }
