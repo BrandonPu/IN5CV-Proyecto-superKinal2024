@@ -411,7 +411,7 @@ DELIMITER ;
 DELIMITER $$
 create PROCEDURE sp_buscarProducto(proId int)
 BEGIN
-    SELECT P.productoId, P.nombreProducto, P.descripcionProductos, P.cantidadStock, P.precioVentaUnitario, P.precioVentaMayor, P.precioCompra, P.imagenProducto
+    SELECT P.productoId, P.nombreProducto, P.descripcionProducto, P.cantidadStock, P.precioVentaUnitario, P.precioVentaMayor, P.precioCompra, P.imagenProducto
 		FROM Productos P
 		WHERE productoId = proId;
 END $$

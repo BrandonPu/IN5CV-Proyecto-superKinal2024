@@ -98,7 +98,7 @@ public class MenuProductoController implements Initializable {
                     cargarDatos();
                 }
             }else if(event.getSource() == btnBuscar){
-                Producto producto = buscarProducto();
+                Producto producto = buscarProducto(Integer.parseInt(tfProductoId.getText()));
                 if(producto != null){
                     lblNombreProducto.setText(producto.getNombreProducto());
                     lblStock.setText(Integer.toString(producto.getCantidadStock()));
@@ -114,9 +114,6 @@ public class MenuProductoController implements Initializable {
             } else if(event.getSource() == btnReportes){
                 GenerarReporte.getInstance().generarProductos();
             }
-            /*else if(event.getSource() == btnVaciar){
-                vaciarDatos();
-            } */
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -155,7 +152,7 @@ public class MenuProductoController implements Initializable {
     }
     
     public void cargarDatosEditar(){
-        Producto pd = (Producto)tblProductos.getSelectionModel().getSelectedItem();
+        Producto pd = buscarProducto(((Producto)tblProductos.getSelectionModel().getSelectedItem()).getProductoId());
         if(pd != null){
             tfProductoId.setText(Integer.toString(pd.getProductoId()));
             tfNombreProducto.setText(pd.getNombreProducto());
@@ -166,6 +163,14 @@ public class MenuProductoController implements Initializable {
             taDescripcionProducto.setText(pd.getDescripcionProductos());
             cmbDistribuidores.getSelectionModel().select(obtenerIndexDistribuidor());
             cmbCategorias.getSelectionModel().select(obtenerIndexCategoria());
+            try{
+                InputStream file = pd.getImagenProducto().getBinaryStream();
+                Image image = new Image(file);
+                imgCargar.setImage(image);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            ProductoDTO.getProductoDTO().setProducto(pd);
         }
     }
    
@@ -409,26 +414,28 @@ public class MenuProductoController implements Initializable {
         return FXCollections.observableList(categorias);
     }
      
-    public Producto buscarProducto(){
+    public Producto buscarProducto(int prodId){
         Producto producto = null;
         try{
             conexion = Conexion.getInstance().obtenerConexion();
             String sql = "call sp_BuscarProducto(?)";
             statement = conexion.prepareStatement(sql);
-            statement.setInt(1, Integer.parseInt(tfBuscarProductoId.getText()));
+            statement.setInt(1, prodId);
             
             resultSet = statement.executeQuery();
             
             if(resultSet.next()){
                int productoId =  resultSet.getInt("productoId");
                String nombre = resultSet.getString("nombreProducto");
+               String descripcionProducto = resultSet.getString("descripcionProducto");
                int stock =  resultSet.getInt("cantidadStock");
                double  unitario = resultSet.getDouble("precioVentaUnitario");
                double  mayor = resultSet.getDouble("precioVentaMayor");
                double  compra = resultSet.getDouble("precioCompra");
                Blob imagenProducto = resultSet.getBlob("imagenProducto");
                
-               producto = new Producto(productoId, nombre,stock,unitario,mayor,compra, imagenProducto);
+               
+               producto = new Producto(productoId, nombre, descripcionProducto, stock,unitario,mayor,compra, imagenProducto);
             }
         }catch(SQLException e){
             e.printStackTrace();

@@ -108,8 +108,6 @@ public class Producto {
         this.precioCompra = precioCompra;
         this.imagenProducto = imagenProducto;
     }
-
-    
     
     public int getProductoId() {
         return productoId;
@@ -206,8 +204,6 @@ public class Producto {
     public void setCantidadStock(int cantidadStock) {
         this.cantidadStock = cantidadStock;
     }
-    
-    
 
     @Override
     public String toString() {

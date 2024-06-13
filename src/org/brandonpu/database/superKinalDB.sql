@@ -157,6 +157,5 @@ create table Usuarios(
     constraint FK_Usuarios_NivelesAcceso foreign key Usuarios(nivelAccesoId)
 		references NivelesAcceso(nivelAccesoId),
 	constraint FK_Usuarios_Empleados foreign key Usuarios(empleadoId)
-		references Empleados(empleadoId)
-    
+		references Empleados(empleadoId)    
 );
