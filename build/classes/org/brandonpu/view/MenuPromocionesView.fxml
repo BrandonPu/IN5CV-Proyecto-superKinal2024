@@ -19,7 +19,7 @@
             <Image url="@../image/Promociones.png" />
          </image>
       </ImageView>
-      <TextField fx:id="tfPromocionId" layoutX="14.0" layoutY="142.0" prefHeight="34.0" prefWidth="242.0" promptText="Promoción ID" style="-fx-background-radius: 10;" />
+      <TextField fx:id="tfPromocionId" editable="false" layoutX="14.0" layoutY="142.0" prefHeight="34.0" prefWidth="242.0" promptText="Promoción ID" style="-fx-background-radius: 10;" />
       <TextField fx:id="tfPrecio" layoutX="14.0" layoutY="214.0" prefHeight="34.0" prefWidth="242.0" promptText="Precio de la Promoción" style="-fx-background-radius: 10;" />
       <TextField fx:id="tfFechaInicio" editable="false" layoutX="25.0" layoutY="449.0" prefHeight="25.0" prefWidth="200.0" promptText="Fecha de Inicio de la Promoción" style="-fx-background-radius: 10;" />
       <TextField fx:id="tfFechaFinalizacion" layoutX="14.0" layoutY="536.0" prefHeight="34.0" prefWidth="290.0" promptText="Fecha de Finalización" style="-fx-background-radius: 10;" />
@@ -35,14 +35,30 @@
          </columns>
       </TableView>
       <ComboBox fx:id="cmbProducto" layoutX="567.0" layoutY="107.0" prefHeight="34.0" prefWidth="251.0" style="-fx-background-radius: 10;" />
-      <Button fx:id="btnGuardar" alignment="CENTER" layoutX="837.0" layoutY="101.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="46.0" prefWidth="130.0" style="-fx-background-radius: 10;" text="Guardar" />
+      <Button fx:id="btnGuardar" alignment="CENTER" layoutX="70.0" layoutY="598.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="46.0" prefWidth="130.0" style="-fx-background-radius: 10;" text="Guardar" />
       <Button fx:id="btnVaciar" alignment="CENTER" layoutX="1069.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="46.0" prefWidth="99.0" style="-fx-background-radius: 10;" text="Vaciar Form" />
-      <Button fx:id="btnEliminar" alignment="CENTER" disable="true" layoutX="936.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="46.0" prefWidth="99.0" style="-fx-background-radius: 10;" text="Eliminar" />
+      <Button fx:id="btnEliminar" alignment="CENTER" layoutX="936.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="46.0" prefWidth="99.0" style="-fx-background-radius: 10;" text="Eliminar" />
       <Button fx:id="btnRegresar" layoutX="1001.0" layoutY="591.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Regresar">
          <font>
             <Font name="System Italic" size="18.0" />
          </font>
       </Button>
       <Text layoutX="21.0" layoutY="488.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No poner nada es automatico el Inicio" wrappingWidth="321.33674240112305" />
+      <Text layoutX="329.0" layoutY="552.0" strokeType="OUTSIDE" strokeWidth="0.0" text="O AAAA-MM-DD" wrappingWidth="211.73675537109375">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <TextField fx:id="tfBuscarId" alignment="CENTER" layoutX="943.0" layoutY="100.0" prefHeight="40.0" prefWidth="226.0" promptText="Ingrese el Id a Buscar" style="-fx-background-radius: 10;" />
+      <Button fx:id="btnBuscar" layoutX="888.0" layoutY="100.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="48.0">
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/Lupa.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Text layoutX="943.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingresar El numero buscar" wrappingWidth="199.2000488281251" />
    </children>
 </AnchorPane>

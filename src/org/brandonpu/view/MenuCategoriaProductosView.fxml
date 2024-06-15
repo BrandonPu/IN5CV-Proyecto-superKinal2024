@@ -51,6 +51,13 @@
       <Text layoutX="335.0" layoutY="622.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Para vaciar los datos" />
       <Text layoutX="886.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Guardar y editar datos" />
       <TextField fx:id="tfCategoriaId" layoutX="894.0" layoutY="687.0" onAction="#handleButtonAction" prefHeight="38.0" prefWidth="280.0" promptText="Ingresar el Id de Categoría Productos a buscar" />
-      <Button fx:id="btnBuscar" layoutX="843.0" layoutY="687.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="38.0" prefWidth="33.0" />
+      <Button fx:id="btnBuscar" layoutX="843.0" layoutY="687.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="38.0" prefWidth="33.0">
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/Lupa.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </AnchorPane>

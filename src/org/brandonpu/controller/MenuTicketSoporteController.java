@@ -25,6 +25,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import org.brandonpu.dao.Conexion;
 import org.brandonpu.model.Cliente;
 import org.brandonpu.model.Factura;
@@ -57,7 +58,7 @@ public class MenuTicketSoporteController implements Initializable {
     @FXML
     TextArea taDescripcion;
     @FXML
-    TextField tfTicketId,tfSoporteId;
+    TextField tfTicketId,tfSoporteId,tfBuscarId;
     
     @FXML
     public void handleButtonAction(ActionEvent event){
@@ -65,32 +66,42 @@ public class MenuTicketSoporteController implements Initializable {
             stage.menuPrincipalView();
         } else if(event.getSource() == btnGuardar){
             if(tfTicketId.getText().equals("")){
-                agregarTicket();
-                SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
-                cargarDatos();
+                if(cmbClientes.getValue() != null && cmbFacturas.getValue() != null && !taDescripcion.getText().equals("")){
+                    agregarTicket();
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
+                    cargarDatos();   
+                } else {
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    cmbClientes.requestFocus();
+                    return;
+                }
             }else{
-                if(!taDescripcion.getText().equals("")){
+                if(cmbClientes.getValue() != null && cmbFacturas.getValue() != null && !taDescripcion.getText().equals("")){
                     if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
                         editarTicket();
                         cargarDatos();
                     }
+                }else {
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    cmbClientes.requestFocus();
+                    return;
                 }
             }
         } else if(event.getSource() == btnVaciar){
             vaciarCampos();
         } else if(event.getSource() == btnBuscar){
             tblTickets.getItems().clear();
-            if(tfTicketId.getText().equals("")){
+            if(tfBuscarId.getText().equals("")){
                 cargarDatos();
-            }/*else{
+            }else{
                 tblTickets.getItems().add(buscarTicket());
                 colTicketId.setCellValueFactory(new PropertyValueFactory<TicketSoporte, Integer>("ticketSoporteId"));
                 colDescripcion.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("descripcionTicket"));
                 colEstatus.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("estatus"));
-                colCliente.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("clienteId"));
-                colFactura.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("facturaId"));
+                colCliente.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("cliente"));
+                colFactura.setCellValueFactory(new PropertyValueFactory<TicketSoporte, String>("factura"));
         
-            }*/
+            }
         }
     }
     
@@ -334,6 +345,43 @@ public class MenuTicketSoporteController implements Initializable {
         return FXCollections.observableList(factura);
     }
    
+    public TicketSoporte buscarTicket(){
+        TicketSoporte ticketSoporte = null;
+        try{
+            conexion = Conexion.getInstance().obtenerConexion();
+            String sql = "call sp_buscarTicketSoporte(?)";
+            statement = conexion.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(tfBuscarId.getText()));
+            resultSet = statement.executeQuery();
+            
+            if(resultSet.next()){
+                int ticketSoporteId = resultSet.getInt("ticketSoporteId");
+                String descripcionTicket = resultSet.getString("descripcionTicket");
+                String estatus = resultSet.getString("estatus");
+                String cliente = resultSet.getString("cliente");
+                String factura = resultSet.getString("factura");
+                
+                ticketSoporte = (new TicketSoporte(ticketSoporteId,descripcionTicket,estatus,cliente,factura));
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }finally{
+            try{
+                if(resultSet != null){
+                    resultSet.close();
+                }
+                if(statement != null){
+                    statement.close();
+                }
+                if(conexion != null){
+                    conexion.close();
+                }
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
+        }
+        return ticketSoporte;
+    }
     public Main getStage() {
         return stage;
     }

@@ -270,11 +270,17 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE sp_buscarTicketSoporte(ticSopId int)
+create PROCEDURE sp_buscarTicketSoporte(ticSopId int)
 BEGIN
-    SELECT * FROM TicketSoporte WHERE ticketSoporteId = ticSopId;
+    SELECT 
+		TS.ticketSoporteId, TS.descripcionTicket, TS.estatus,
+			CONCAT('Id: ', C.clienteId, ' | ', C.nombre, ' ', C.apellido) AS 'cliente',
+            CONCAT('Id: ', F.facturaId, ' | fecha: ', F.fecha, ' ', F.hora) AS 'factura' from TicketSoporte TS
+    join Clientes C on TS.clienteId = C.clienteId
+    join Facturas F ON TS.facturaId = F.facturaId  WHERE ticketSoporteId = ticSopId;
 END $$
 DELIMITER ;
+
 
 DELIMITER $$
 CREATE PROCEDURE sp_editarTicketSoporte(ticSopId int,des varchar(250),est varchar(30),cliId int,facId int)
@@ -416,6 +422,18 @@ BEGIN
 END $$
 DELIMITER ;
 
+Delimiter $$
+CREATE PROCEDURE sp_buscarProductoId(proId int)
+BEGIN
+	SELECT P.productoId, P.nombreProducto, P.descripcionProducto, P.cantidadStock, P.precioVentaUnitario, P.precioVentaMayor, P.precioCompra,
+        CONCAT('Id: ', D.distribuidorId, '| ',D.nombreDistribuidor)AS 'Distribuidor',
+		CONCAT('Id: ', C.categoriaProductosId, '| ',C.nombreCategoria)AS 'categoria'
+		FROM Productos P
+        join Distribuidores D on P.distribuidorId = D.distribuidorId
+		join CategoriaProductos C on P.categoriaProductosId = C.categoriaProductosId WHERE productoId = proId;
+END $$
+DELIMITER ;
+
 DELIMITER $$
 CREATE PROCEDURE sp_editarProducto(prodId int,nom varchar(50),des varchar(100),cant int,pvu decimal(10,2),pvm decimal(10,2),pc decimal(10,2),img LONGBLOB,disId int,catId int)
 BEGIN
@@ -549,9 +567,11 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE sp_buscarPromocion(promId int)
+create PROCEDURE sp_buscarPromocion(promId int)
 BEGIN
-    SELECT * FROM Promociones WHERE promocionId = promId;
+    SELECT PS.promocionId, PS.precioPromocion, PS.descripcionPromocion, PS.fechaInicio, PS.fechaFinalizacion,
+		CONCAT('Id: ',P.productoId, '| ',P.nombreProducto)AS 'producto' from Promociones PS
+            join Productos P on PS.productoId = P.productoId WHERE promocionId = promId;
 END $$
 DELIMITER ;
 

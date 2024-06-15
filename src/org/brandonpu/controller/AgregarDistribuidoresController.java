@@ -74,11 +74,27 @@ public class AgregarDistribuidoresController implements Initializable {
                         editarDistribuidor();
                         DistribuidorDTO.getDistribuidorDTO().setDistribuidor(null);
                         stage.menuDistribuidorView();
+                    }else{
+                        SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                        tfNombreDistribuidor.requestFocus();
+                        return;
                     }
-                }
+                }   
             }
         }
     }
+    
+    /*if(!tfNombreEmpleado.getText().equals("") && !tfApellidoEmpleado.getText().equals("") && !tfHoraEntrada.getText().equals("") && !tfHoraSalida.getText().equals("")){
+                    if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
+                        editarEmpleado();
+                        EmpleadoDTO.getEmpleadoDTO().setEmpleado(null);
+                        stage.menuEmpleadosView();
+                    }
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    tfNombreEmpleado.requestFocus();
+                    return;
+                } */
     
     public void cargarDatos(Distribuidor distribuidor){
         tfDistribuidorId.setText(Integer.toString(distribuidor.getDistribuidorId()));

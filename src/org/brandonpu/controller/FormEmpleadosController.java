@@ -78,7 +78,6 @@ public class FormEmpleadosController implements Initializable {
                     return;
                 }   
             } else if(op == 2){
-                
                 if(!tfNombreEmpleado.getText().equals("") && !tfApellidoEmpleado.getText().equals("") && !tfHoraEntrada.getText().equals("") && !tfHoraSalida.getText().equals("")){
                     if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
                         editarEmpleado();

@@ -57,11 +57,17 @@ public class MenuCategoriaProductosController implements Initializable {
         if(event.getSource() == btnRegresar){
             stage.menuPrincipalView();
         } else if(event.getSource() == btnGuardar){
-            tblCategoriaProductos.getItems().clear();
+            //tblCategoriaProductos.getItems().clear();
             if(tfCategoriaProductoId.getText().equals("")){
-                agregarCategoria();
-                SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
-                cargarDatos();
+                if(!tfNombreCategoria.getText().equals("") && !taDescripcion.getText().equals("")){
+                    agregarCategoria();
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
+                    cargarDatos();   
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    tfNombreCategoria.requestFocus();
+                    return;
+                } 
             }else{
                 if(!tfNombreCategoria.getText().equals("") && !taDescripcion.getText().equals("")){
                     if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){

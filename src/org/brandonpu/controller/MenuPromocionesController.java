@@ -46,7 +46,7 @@ public class MenuPromocionesController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
-    TextField tfPromocionId, tfPrecio, tfFechaInicio, tfFechaFinalizacion;   
+    TextField tfPromocionId, tfPrecio, tfFechaInicio, tfFechaFinalizacion,tfBuscarId;   
     @FXML
     TextArea taDescripcion;   
     @FXML
@@ -56,7 +56,7 @@ public class MenuPromocionesController implements Initializable {
     @FXML
     TableColumn colPromocionId, colPrecio, colDescripcion, colFechaInicio, colFechaFinalizacion, colProducto;
     @FXML
-    Button btnGuardar, btnEliminar, btnRegresar, btnVaciar;
+    Button btnGuardar, btnEliminar, btnRegresar, btnVaciar,btnBuscar;
   
     @FXML
     public void handleButtonAction(ActionEvent event){
@@ -64,19 +64,52 @@ public class MenuPromocionesController implements Initializable {
             stage.menuPrincipalView();
         }else if(event.getSource() == btnGuardar){
             if(tfPromocionId.getText().equals("")){
-                agregarPromociones();
-                SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
-                cargarDatos();
+                if(cmbProducto.getValue() != null && !tfPrecio.getText().equals("") && !taDescripcion.getText().equals("") && !tfFechaFinalizacion.getText().equals("")){
+                    agregarPromociones();
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
+                    cargarDatos();   
+                }else{
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    cmbProducto.requestFocus();
+                    return;
+                }
+                
             }else{
-                if(!taDescripcion.getText().equals("")){
+                if(!tfPromocionId.getText().equals("")){
                     if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
-                        editarPromociones();
-                        cargarDatos();
+                        if(cmbProducto.getValue() != null && !tfPrecio.getText().equals("") && !taDescripcion.getText().equals("") && !tfFechaFinalizacion.getText().equals("")){
+                            editarPromociones();
+                            cargarDatos();
+                        }else{
+                            SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                            cmbProducto.requestFocus();
+                            return;
+                        }
                     }
                 }
             }
         }else if(event.getSource() == btnVaciar){
             vaciarCampos();
+        } else if(event.getSource() == btnEliminar){
+            if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(405).get() == ButtonType.OK){
+                int promId = ((Promocion)tblPromociones.getSelectionModel().getSelectedItem()).getPromocionId();
+                eliminarPromocion(promId);
+                cargarDatos();
+            }
+        } else if(event.getSource() == btnBuscar){
+            tblPromociones.getItems().clear();
+            if(tfBuscarId.getText().equals("")){
+                cargarDatos();
+            } else{
+                tblPromociones.getItems().add(buscarPromocion());
+                colPromocionId.setCellValueFactory(new PropertyValueFactory<Promocion, Integer>("promocionId"));
+                colPrecio.setCellValueFactory(new PropertyValueFactory<Promocion, Double>("precioPromocion"));
+                colDescripcion.setCellValueFactory(new PropertyValueFactory<Promocion, String>("descripcionPromocion"));
+                colFechaInicio.setCellValueFactory(new PropertyValueFactory<Promocion, String>("fechaInicio"));
+                colFechaFinalizacion.setCellValueFactory(new PropertyValueFactory<Promocion, Integer>("fechaFinalizacion"));
+                colProducto.setCellValueFactory(new PropertyValueFactory<Promocion, String>("producto"));
+                tblPromociones.getSortOrder().add(colPromocionId);
+            }
         }
     }
     /**
@@ -276,6 +309,66 @@ public class MenuPromocionesController implements Initializable {
         return FXCollections.observableList(productos);
     }
     
+    public void eliminarPromocion(int promId){
+        try{
+            conexion = Conexion.getInstance().obtenerConexion();
+            String sql = "call sp_eliminarPromocion(?)";
+            statement = conexion.prepareStatement(sql);
+            statement.setInt(1, promId);
+            statement.execute();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }finally{
+            try{
+                if(statement != null){
+                    statement.close();
+                }
+                if(conexion != null){
+                    conexion.close();
+                }
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    
+    public Promocion buscarPromocion(){
+        Promocion promocion = null;
+        try{
+            conexion = Conexion.getInstance().obtenerConexion();
+            String sql = "call sp_buscarPromocion(?)";
+            statement = conexion.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(tfBuscarId.getText()));
+            resultSet = statement.executeQuery();
+            
+            if(resultSet.next()){
+                int promocionId = resultSet.getInt("promocionId");
+                Double precio = resultSet.getDouble("precioPromocion");
+                String descripcion = resultSet.getString("descripcionPromocion");
+                String fechaInicio = resultSet.getString("fechaInicio");
+                String fechaFinalizacion = resultSet.getString("fechaFinalizacion");
+                String producto = resultSet.getString("producto");
+                promocion = (new Promocion(promocionId,precio,descripcion,fechaInicio,fechaFinalizacion,producto));
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }finally{
+            try{
+                if(resultSet != null){
+                    resultSet.close();
+                }
+                if(statement != null){
+                    statement.close();
+                }
+                if(conexion != null){
+                    conexion.close();
+                }
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
+        }
+        return promocion;
+    }
     public void vaciarCampos(){
         tfPromocionId.clear();
         tfPrecio.clear();

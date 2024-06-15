@@ -23,6 +23,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -56,13 +57,14 @@ public class MenuProductoController implements Initializable {
     private static PreparedStatement statement = null;
     private static ResultSet resultSet = null;
     private List<File> files = null;
+    private Image baseImage;
     
     @FXML
     ComboBox cmbDistribuidores, cmbCategorias;
     @FXML
-    Button btnRegresar,btnGuardar, btnBuscar, btnEliminar,btnVaciar,btnReportes;
+    Button btnRegresar,btnGuardar, btnBuscar, btnEliminar,btnVaciar,btnReportes,btnBuscarPro;
     @FXML
-    TextField tfProductoId, tfNombreProducto,tfUnidad, tfMayor, tfCompra, tfDistribuidor, tfCategoria, tfStock,tfBuscarProductoId ;
+    TextField tfProductoId, tfNombreProducto,tfUnidad, tfMayor, tfCompra, tfDistribuidor, tfCategoria, tfStock,tfBuscarProductoId,tfBuscarId ;
     @FXML
     TableView tblProductos;
     @FXML
@@ -80,6 +82,8 @@ public class MenuProductoController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         cmbDistribuidores.setItems(listarDistribuidores());
         cmbCategorias.setItems(listarCategorias());
+        baseImage = new Image("/org/brandonpu/image/FondoSubirImagen.png");
+        imgCargar.setImage(baseImage);
         cargarDatos();
     }    
 
@@ -90,12 +94,28 @@ public class MenuProductoController implements Initializable {
                 stage.menuPrincipalView();
             }else if(event.getSource() == btnGuardar){
                 if(tfProductoId.getText().equals("")){
-                    agregarProducto();
-                    SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
-                    cargarDatos();
+                    if(!imgCargar.getImage().equals(baseImage) && cmbDistribuidores.getValue() != null && cmbCategorias.getValue() != null && !tfNombreProducto.getText().equals("") && !tfStock.getText().equals("") && !tfUnidad.getText().equals("") && !tfMayor.getText().equals("") &&  !tfCompra.getText().equals("") && !taDescripcionProducto.getText().equals("")){
+                        agregarProducto();
+                        SuperKinalAlert.getInstance().mostrarAlertaInfo(401);
+                        cargarDatos();   
+                    } else{
+                        SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                        tfNombreProducto.requestFocus();
+                        return;
+                    }
                 }else{
-                    editarProducto();
-                    cargarDatos();
+                    if(!tfProductoId.getText().equals("")){
+                        if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(106).get() == ButtonType.OK){
+                            if(!imgCargar.getImage().equals(baseImage) && cmbDistribuidores.getValue() != null && cmbCategorias.getValue() != null && !tfNombreProducto.getText().equals("") && !tfStock.getText().equals("") && !tfUnidad.getText().equals("") && !tfMayor.getText().equals("") &&  !tfCompra.getText().equals("") && !taDescripcionProducto.getText().equals("")){
+                                editarProducto();
+                                cargarDatos();   
+                            } else{
+                                SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                                tfNombreProducto.requestFocus();
+                                return;
+                            }
+                        }
+                    }
                 }
             }else if(event.getSource() == btnBuscar){
                 Producto producto = buscarProducto(Integer.parseInt(tfProductoId.getText()));
@@ -113,6 +133,22 @@ public class MenuProductoController implements Initializable {
                 vaciarCampos();
             } else if(event.getSource() == btnReportes){
                 GenerarReporte.getInstance().generarProductos();
+            } else if(event.getSource() == btnBuscarPro){
+                tblProductos.getItems().clear();
+                if(tfBuscarId.getText().equals("")){
+                    cargarDatos();
+                } else{
+                    tblProductos.getItems().add(buscarProductoId());
+                    colProductoId.setCellValueFactory(new PropertyValueFactory<Producto, Integer> ("productoId"));
+                    colNombre.setCellValueFactory(new PropertyValueFactory<Producto, String> ("nombreProducto"));
+                    colDescripcion.setCellValueFactory(new PropertyValueFactory<Producto, String> ("descripcionProductos"));
+                    colStock.setCellValueFactory(new PropertyValueFactory<Producto, String> ("cantidadStock"));
+                    colUnidad.setCellValueFactory(new PropertyValueFactory<Producto, String> ("precioVentaUnitario"));
+                    colMayor.setCellValueFactory(new PropertyValueFactory<Producto, String> ("precioVentaMayor"));
+                    colCompra.setCellValueFactory(new PropertyValueFactory<Producto, String> ("precioCompra"));
+                    colDistribuidor.setCellValueFactory(new PropertyValueFactory<Producto, String> ("Distribuidor"));
+                    colCategoria.setCellValueFactory(new PropertyValueFactory<Producto, String> ("categoriaProducto"));
+                }
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -149,6 +185,7 @@ public class MenuProductoController implements Initializable {
         taDescripcionProducto.clear();
         cmbDistribuidores.getSelectionModel().clearSelection();
         cmbCategorias.getSelectionModel().clearSelection();
+        imgCargar.setImage(baseImage);
     }
     
     public void cargarDatosEditar(){
@@ -436,6 +473,44 @@ public class MenuProductoController implements Initializable {
                
                
                producto = new Producto(productoId, nombre, descripcionProducto, stock,unitario,mayor,compra, imagenProducto);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            try{
+                if(conexion != null){
+                    conexion.close();
+                }else if(statement != null){
+                    statement.close();
+                }
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return producto;
+    }
+    
+    public Producto buscarProductoId(){
+        Producto producto = null;
+        try{
+            conexion = Conexion.getInstance().obtenerConexion();
+            String sql = "call sp_buscarProductoId(?)";
+            statement = conexion.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(tfBuscarId.getText()));
+            resultSet = statement.executeQuery();
+            
+            if(resultSet.next()){
+               int productoId =  resultSet.getInt("productoId");
+               String nombre = resultSet.getString("nombreProducto");
+               String descripcionProducto = resultSet.getString("descripcionProducto");
+               int stock =  resultSet.getInt("cantidadStock");
+               double  unitario = resultSet.getDouble("precioVentaUnitario");
+               double  mayor = resultSet.getDouble("precioVentaMayor");
+               double  compra = resultSet.getDouble("precioCompra");
+               String distribuidor = resultSet.getString("Distribuidor");
+               String categoria = resultSet.getString("categoria");
+               
+               producto = new Producto(productoId, nombre, descripcionProducto, stock,unitario,mayor,compra, distribuidor,categoria);
             }
         }catch(SQLException e){
             e.printStackTrace();

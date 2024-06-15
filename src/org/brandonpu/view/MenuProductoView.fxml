@@ -11,84 +11,96 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" prefHeight="950.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.brandonpu.controller.MenuProductoController">
    <children>
-      <ImageView fitHeight="950.0" fitWidth="1600.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="950.0" fitWidth="1600.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 10;">
          <image>
             <Image url="@../image/FondoMenuProductos.png" />
          </image>
       </ImageView>
       <TextField fx:id="tfProductoId" editable="false" layoutX="1373.0" layoutY="45.0" prefHeight="32.0" prefWidth="198.0" />
-      <TextField fx:id="tfNombreProducto" layoutX="1320.0" layoutY="117.0" prefHeight="38.0" prefWidth="251.0" />
-      <TextField fx:id="tfStock" layoutX="1320.0" layoutY="206.0" prefHeight="38.0" prefWidth="251.0" />
-      <TextField fx:id="tfUnidad" layoutX="1320.0" layoutY="293.0" prefHeight="38.0" prefWidth="251.0" />
-      <TextField fx:id="tfMayor" layoutX="1320.0" layoutY="388.0" prefHeight="38.0" prefWidth="251.0" />
-      <TextField fx:id="tfCompra" layoutX="1320.0" layoutY="475.0" prefHeight="38.0" prefWidth="251.0" />
-      <TextArea fx:id="taDescripcionProducto" layoutX="1259.0" layoutY="546.0" prefHeight="120.0" prefWidth="310.0" wrapText="true" />
-      <ImageView fx:id="imgCargar" fitHeight="174.0" fitWidth="245.0" layoutX="1339.0" layoutY="712.0" onDragDropped="#handleOnDrop" onDragOver="#handleOnDrag" pickOnBounds="true" preserveRatio="true">
+      <TextField fx:id="tfNombreProducto" layoutX="1065.0" layoutY="145.0" prefHeight="38.0" prefWidth="251.0" style="-fx-background-radius: 10;" />
+      <TextField fx:id="tfStock" layoutX="1373.0" layoutY="145.0" prefHeight="38.0" prefWidth="198.0" style="-fx-background-radius: 10;" />
+      <TextField fx:id="tfUnidad" layoutX="1316.0" layoutY="235.0" prefHeight="38.0" prefWidth="251.0" style="-fx-background-radius: 10;" />
+      <TextField fx:id="tfMayor" layoutX="1316.0" layoutY="320.0" prefHeight="38.0" prefWidth="251.0" style="-fx-background-radius: 10;" />
+      <TextField fx:id="tfCompra" layoutX="1316.0" layoutY="410.0" prefHeight="38.0" prefWidth="251.0" style="-fx-background-radius: 10;" />
+      <TextArea fx:id="taDescripcionProducto" layoutX="1260.0" layoutY="496.0" prefHeight="120.0" prefWidth="310.0" style="-fx-background-radius: 10;" wrapText="true" />
+      <ImageView fx:id="imgCargar" fitHeight="195.0" fitWidth="272.0" layoutX="1301.0" layoutY="681.0" onDragDropped="#handleOnDrop" onDragOver="#handleOnDrag" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../image/FondoSubirImagen.png" />
          </image>
       </ImageView>
-      <ComboBox fx:id="cmbCategorias" layoutX="1004.0" layoutY="135.0" prefHeight="38.0" prefWidth="261.0" />
-      <ComboBox fx:id="cmbDistribuidores" layoutX="678.0" layoutY="136.0" prefHeight="38.0" prefWidth="261.0" />
-      <TextField fx:id="tfBuscarProductoId" alignment="CENTER" layoutX="24.0" layoutY="14.0" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="280.0" promptText="Ingrese el id del Producto a buscar" style="-fx-background-radius: 5;" />
-      <Button fx:id="btnBuscar" layoutX="325.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="55.0" style="-fx-background-radius: 10;" />
-      <Label fx:id="lblNombreProducto" layoutX="410.0" layoutY="28.0" prefHeight="35.0" prefWidth="139.0" textFill="WHITE">
+      <ComboBox fx:id="cmbCategorias" layoutX="783.0" layoutY="145.0" prefHeight="38.0" prefWidth="261.0" style="-fx-background-radius: 10;" />
+      <ComboBox fx:id="cmbDistribuidores" layoutX="494.0" layoutY="145.0" prefHeight="38.0" prefWidth="261.0" style="-fx-background-radius: 10;" />
+      <TextField fx:id="tfBuscarProductoId" alignment="CENTER" layoutX="24.0" layoutY="14.0" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="280.0" promptText="Ingrese el id del Producto a buscar" style="-fx-background-radius: 5;" visible="false" />
+      <Button fx:id="btnBuscar" layoutX="325.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="55.0" style="-fx-background-radius: 10;" visible="false" />
+      <Label fx:id="lblNombreProducto" layoutX="338.0" layoutY="68.0" prefHeight="35.0" prefWidth="139.0" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="lblUnitario" layoutX="410.0" layoutY="89.0" prefHeight="35.0" prefWidth="139.0" textFill="WHITE">
+      <Label fx:id="lblUnitario" layoutX="338.0" layoutY="129.0" prefHeight="35.0" prefWidth="139.0" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="lblMayor" layoutX="410.0" layoutY="136.0" prefHeight="35.0" prefWidth="139.0" textFill="WHITE">
+      <Label fx:id="lblMayor" layoutX="338.0" layoutY="176.0" prefHeight="35.0" prefWidth="139.0" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="lblCompra" layoutX="549.0" layoutY="43.0" prefHeight="35.0" prefWidth="139.0" textFill="WHITE">
+      <Label fx:id="lblCompra" layoutX="503.0" layoutY="71.0" prefHeight="35.0" prefWidth="139.0" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="lblStock" layoutX="416.0" layoutY="174.0" prefHeight="43.0" prefWidth="128.0" />
-      <TableView fx:id="tblProductos" layoutX="25.0" layoutY="296.0" onMouseClicked="#cargarDatosEditar" prefHeight="500.0" prefWidth="1200.0">
+      <Label fx:id="lblStock" layoutX="344.0" layoutY="226.0" prefHeight="43.0" prefWidth="128.0" />
+      <TableView fx:id="tblProductos" layoutX="14.0" layoutY="279.0" onMouseClicked="#cargarDatosEditar" prefHeight="500.0" prefWidth="1200.0" AnchorPane.leftAnchor="14.0">
         <columns>
           <TableColumn fx:id="colProductoId" minWidth="82.39999008178711" prefWidth="82.39999008178711" text="Producto Id" />
           <TableColumn fx:id="colNombre" minWidth="130.0" prefWidth="178.40003967285156" text="Nombre" />
             <TableColumn fx:id="colDescripcion" minWidth="130.0" prefWidth="75.0" text="Descripcion" />
             <TableColumn fx:id="colStock" minWidth="130.0" prefWidth="75.0" text="Stock" />
-            <TableColumn fx:id="colUnidad" minWidth="106.4000244140625" prefWidth="106.4000244140625" text="\$ Unidad" />
-            <TableColumn fx:id="colMayor" minWidth="123.199951171875" prefWidth="123.199951171875" text="\$ Mayor" />
-            <TableColumn fx:id="colCompra" minWidth="124.79998779296875" prefWidth="124.79998779296875" text="\$ Compra" />
+            <TableColumn fx:id="colUnidad" minWidth="106.4000244140625" prefWidth="106.4000244140625" text="Q. Unidad" />
+            <TableColumn fx:id="colMayor" minWidth="123.199951171875" prefWidth="123.199951171875" text="Q. Mayor" />
+            <TableColumn fx:id="colCompra" minWidth="124.79998779296875" prefWidth="124.79998779296875" text="Q. Compra" />
             <TableColumn fx:id="colDistribuidor" minWidth="130.0" prefWidth="163.9998779296875" text="Ditribuidor" />
             <TableColumn fx:id="colCategoria" minWidth="114.4000244140625" prefWidth="157.60009765625" text="Categoria" />
         </columns>
       </TableView>
-      <Button fx:id="btnGuardar" layoutX="1155.0" layoutY="812.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="43.0" prefWidth="96.0" style="-fx-background-radius: 10;" text="Guardar">
+      <Button fx:id="btnGuardar" layoutX="1071.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="125.0" style="-fx-background-radius: 10;" text="Guardar">
          <font>
             <Font name="System Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnRegresar" layoutX="54.0" layoutY="856.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Regresar">
+      <Button fx:id="btnRegresar" layoutX="42.0" layoutY="821.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="67.0" prefWidth="149.0" style="-fx-background-radius: 10;" text="Regresar">
          <font>
             <Font name="System Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnVaciar" layoutX="1004.0" layoutY="812.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="43.0" prefWidth="110.0" style="-fx-background-radius: 10;" text="Vaciar Form">
+      <Button fx:id="btnVaciar" layoutX="859.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="50.0" prefWidth="125.0" style="-fx-background-radius: 10;" text="Vaciar Form">
          <font>
             <Font name="System Italic" size="15.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgMostrar" fitHeight="210.0" fitWidth="312.0" layoutX="41.0" layoutY="64.0" onDragDropped="#handleOnDrop" onDragOver="#handleOnDrag" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="btnReportes" layoutX="1065.0" layoutY="876.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="139.0" style="-fx-background-radius: 10;" text="Reportes">
+      <ImageView fx:id="imgMostrar" fitHeight="210.0" fitWidth="312.0" layoutX="8.0" layoutY="64.0" onDragDropped="#handleOnDrop" onDragOver="#handleOnDrag" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="btnReportes" layoutX="1081.0" layoutY="815.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="139.0" style="-fx-background-radius: 10;" text="Reportes">
          <font>
             <Font name="SansSerif Italic" size="20.0" />
          </font>
       </Button>
+      <TextField fx:id="tfBuscarId" alignment="CENTER" layoutX="783.0" layoutY="825.0" prefHeight="40.0" prefWidth="226.0" promptText="Ingrese el Id a Buscar" style="-fx-background-radius: 10;" />
+      <Button fx:id="btnBuscarPro" layoutX="721.0" layoutY="825.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="48.0">
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/Lupa.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Text layoutX="783.0" layoutY="811.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingresar El numero buscar" wrappingWidth="199.2000488281251" />
    </children>
 </AnchorPane>
